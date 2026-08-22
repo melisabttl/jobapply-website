@@ -7,20 +7,20 @@ import {
 } from '@headlessui/react'
 import { Bars2Icon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
+import { Button } from './button'
 import { Link } from './link'
-import { Logo } from './logo'
 import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
 
 const links = [
+  { href: '/#product', label: 'Product' },
+  { href: '/#how-it-works', label: 'How it works' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/company', label: 'Company' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/login', label: 'Login' },
+  { href: '/login', label: 'Log in' },
 ]
 
 function DesktopNav() {
   return (
-    <nav className="relative hidden lg:flex">
+    <nav className="relative hidden lg:flex lg:items-center">
       {links.map(({ href, label }) => (
         <PlusGridItem key={href} className="relative flex">
           <Link
@@ -31,6 +31,9 @@ function DesktopNav() {
           </Link>
         </PlusGridItem>
       ))}
+      <PlusGridItem className="flex items-center py-3 pl-2">
+        <Button href="#">Get started</Button>
+      </PlusGridItem>
     </nav>
   )
 }
@@ -66,6 +69,19 @@ function MobileNav() {
             </Link>
           </motion.div>
         ))}
+        <motion.div
+          initial={{ opacity: 0, rotateX: -90 }}
+          animate={{ opacity: 1, rotateX: 0 }}
+          transition={{
+            duration: 0.15,
+            ease: 'easeInOut',
+            rotateX: { duration: 0.3, delay: links.length * 0.1 },
+          }}
+        >
+          <Button href="#" className="w-full">
+            Get started
+          </Button>
+        </motion.div>
       </div>
       <div className="absolute left-1/2 w-screen -translate-x-1/2">
         <div className="absolute inset-x-0 top-0 border-t border-black/5" />
@@ -82,8 +98,10 @@ export function Navbar({ banner }: { banner?: React.ReactNode }) {
         <PlusGridRow className="relative flex justify-between">
           <div className="relative flex gap-6">
             <PlusGridItem className="py-3">
-              <Link href="/" title="Home">
-                <Logo className="h-9" />
+              <Link href="/" title="Home" className="flex h-9 items-center">
+                <span className="text-xl font-semibold tracking-tight text-gray-950">
+                  JobApply
+                </span>
               </Link>
             </PlusGridItem>
             {banner && (
