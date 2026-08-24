@@ -1,7 +1,6 @@
 import { AddBackgroundGraphic } from '@/components/add-background-graphic'
 import { BentoCard } from '@/components/bento-card'
 import { Button } from '@/components/button'
-import { CareerProfileGraphic } from '@/components/career-profile-graphic'
 import { Container } from '@/components/container'
 import { EvidenceMatchGraphic } from '@/components/evidence-match-graphic'
 import { Footer } from '@/components/footer'
@@ -13,6 +12,7 @@ import { LogoTimeline } from '@/components/logo-timeline'
 import { Map } from '@/components/map'
 import { Navbar } from '@/components/navbar'
 import { Screenshot } from '@/components/screenshot'
+import { TailoredApplicationsGraphic } from '@/components/tailored-applications-graphic'
 import { Testimonials } from '@/components/testimonials'
 import { Heading, Subheading } from '@/components/text'
 import type { Metadata } from 'next'
@@ -83,10 +83,10 @@ function BentoSection() {
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
         <BentoCard
-          eyebrow="Career profile"
-          title="Your career, organized once."
-          description="JobApply turns your experience, projects, skills, education, and evidence into one profile it can use across every application."
-          graphic={<CareerProfileGraphic />}
+          eyebrow="Tailored applications"
+          title="A tailored application for every job."
+          description="JobApply uses the background you provide to create a tailored resume and cover letter for every job it applies to."
+          graphic={<TailoredApplicationsGraphic />}
           fade={['bottom']}
           className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
         />
