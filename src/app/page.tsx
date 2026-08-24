@@ -1,8 +1,8 @@
 import { AddBackgroundGraphic } from '@/components/add-background-graphic'
+import { AutoApplyGraphic } from '@/components/auto-apply-graphic'
 import { BentoCard } from '@/components/bento-card'
 import { Button } from '@/components/button'
 import { Container } from '@/components/container'
-import { EvidenceMatchGraphic } from '@/components/evidence-match-graphic'
 import { Footer } from '@/components/footer'
 import { Gradient } from '@/components/gradient'
 import { LinkedAvatars } from '@/components/linked-avatars'
@@ -91,10 +91,10 @@ function BentoSection() {
           className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
         />
         <BentoCard
-          eyebrow="Evidence match"
-          title="See exactly why a role matched."
-          description="JobApply maps each requirement to the experience, projects, and skills that support it — then uses the strongest relevant evidence to tailor your application."
-          graphic={<EvidenceMatchGraphic />}
+          eyebrow="Auto apply"
+          title="Apply to 200+ jobs a day."
+          description="JobApply finds relevant roles, tailors your resume and cover letter, completes the application, and submits it for you — automatically."
+          graphic={<AutoApplyGraphic />}
           fade={['bottom']}
           className="lg:col-span-3 lg:rounded-tr-4xl"
         />
