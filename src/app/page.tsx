@@ -54,8 +54,12 @@ function FeatureSection() {
     <div className="overflow-hidden">
       <Container className="pb-24">
         <Heading as="h2" className="max-w-3xl">
-          A snapshot of your entire sales pipeline.
+          Your entire application process, in one place.
         </Heading>
+        {/* TODO: placeholder Radiant screenshot — replace before launch with
+            the real authenticated JobApply Home / application-overview
+            screenshot. Framing/sizing below is Radiant's existing treatment,
+            kept intact so the real screenshot can drop in unchanged. */}
         <Screenshot
           width={1216}
           height={768}
