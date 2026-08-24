@@ -186,8 +186,11 @@ export default function Home() {
     <div className="overflow-hidden">
       <Hero />
       <main>
-        <Container className="mt-10">
-          <LogoCloud />
+        <Container className="mt-10 -mb-6">
+          <p className="text-center text-sm/6 font-medium text-gray-500">
+            Find jobs across the platforms that matter.
+          </p>
+          <LogoCloud className="mt-11" />
         </Container>
         <div className="bg-linear-to-b from-white from-50% to-gray-100 py-32">
           <FeatureSection />
