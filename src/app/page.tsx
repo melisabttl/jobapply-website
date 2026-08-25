@@ -1,14 +1,16 @@
 import { AddBackgroundGraphic } from '@/components/add-background-graphic'
+import { ApplicationAnswersGraphic } from '@/components/application-answers-graphic'
+import { ApplicationFormGraphic } from '@/components/application-form-graphic'
+import { ApplicationsTrackerGraphic } from '@/components/applications-tracker-graphic'
 import { AutoApplyGraphic } from '@/components/auto-apply-graphic'
 import { BentoCard } from '@/components/bento-card'
 import { Button } from '@/components/button'
+import { CompanyResearchGraphic } from '@/components/company-research-graphic'
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient } from '@/components/gradient'
-import { LinkedAvatars } from '@/components/linked-avatars'
 import { LogoCloud } from '@/components/logo-cloud'
 import { LogoCluster } from '@/components/logo-cluster'
-import { LogoTimeline } from '@/components/logo-timeline'
 import { Map } from '@/components/map'
 import { Navbar } from '@/components/navbar'
 import { Screenshot } from '@/components/screenshot'
@@ -128,49 +130,46 @@ function DarkBentoSection() {
   return (
     <div className="mx-2 mt-2 rounded-4xl bg-gray-900 py-32">
       <Container>
-        <Subheading dark>Outreach</Subheading>
+        <Subheading dark>End-to-end</Subheading>
         <Heading as="h3" dark className="mt-2 max-w-3xl">
-          Customer outreach has never been easier.
+          More than clicking Apply.
         </Heading>
+        <p className="mt-4 max-w-2xl text-lg/7 text-gray-400">
+          JobApply doesn&rsquo;t just find jobs — it completes the real
+          application work for you.
+        </p>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <BentoCard
             dark
-            eyebrow="Networking"
-            title="Sell at the speed of light"
-            description="Our RadiantAI chat assistants analyze the sentiment of your conversations in real time, ensuring you're always one step ahead."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/networking.png)] bg-size-[851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
+            eyebrow="Application forms"
+            title="Every field, filled for you."
+            description="JobApply completes application forms using the information already stored in your Career Profile."
+            graphic={<ApplicationFormGraphic />}
             className="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl"
           />
           <BentoCard
             dark
-            eyebrow="Integrations"
-            title="Meet leads where they are"
-            description="With thousands of integrations, no one will be able to escape your cold outreach."
-            graphic={<LogoTimeline />}
-            // `overflow-visible!` is needed to work around a Chrome bug that disables the mask on the graphic.
-            className="z-10 overflow-visible! lg:col-span-2 lg:rounded-tr-4xl"
+            eyebrow="Application answers"
+            title="Questions answered automatically."
+            description="JobApply writes role-specific answers using your background, the job description, and relevant company context."
+            graphic={<ApplicationAnswersGraphic />}
+            className="lg:col-span-2 lg:rounded-tr-4xl"
           />
           <BentoCard
             dark
-            eyebrow="Meetings"
-            title="Smart call scheduling"
-            description="Automatically insert intro calls into your leads' calendars without their consent."
-            graphic={<LinkedAvatars />}
+            eyebrow="Research"
+            title="Every application understands the company."
+            description="JobApply researches the company and role before writing each application."
+            graphic={<CompanyResearchGraphic />}
             className="lg:col-span-2 lg:rounded-bl-4xl"
           />
           <BentoCard
             dark
-            eyebrow="Engagement"
-            title="Become a thought leader"
-            description="RadiantAI automatically writes LinkedIn posts that relate current events to B2B sales, helping you build a reputation as a thought leader."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/engagement.png)] bg-size-[851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
+            eyebrow="Applications"
+            title="Everything you applied to, automatically tracked."
+            description="Every application stays organized in one place, from submitted to interview."
+            graphic={<ApplicationsTrackerGraphic />}
             className="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl"
           />
         </div>
