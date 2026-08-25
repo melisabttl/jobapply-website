@@ -5,7 +5,6 @@ import { ApplicationsTrackerGraphic } from '@/components/applications-tracker-gr
 import { AutoApplyGraphic } from '@/components/auto-apply-graphic'
 import { BentoCard } from '@/components/bento-card'
 import { Button } from '@/components/button'
-import { CompanyResearchGraphic } from '@/components/company-research-graphic'
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient } from '@/components/gradient'
@@ -13,6 +12,7 @@ import { LogoCloud } from '@/components/logo-cloud'
 import { LogoCluster } from '@/components/logo-cluster'
 import { Map } from '@/components/map'
 import { Navbar } from '@/components/navbar'
+import { RecruiterOutreachGraphic } from '@/components/recruiter-outreach-graphic'
 import { Screenshot } from '@/components/screenshot'
 import { TailoredApplicationsGraphic } from '@/components/tailored-applications-graphic'
 import { Testimonials } from '@/components/testimonials'
@@ -158,10 +158,10 @@ function DarkBentoSection() {
           />
           <BentoCard
             dark
-            eyebrow="Research"
-            title="Every application understands the company."
-            description="JobApply researches the company and role before writing each application."
-            graphic={<CompanyResearchGraphic />}
+            eyebrow="Recruiter outreach"
+            title="High-match roles get a personal follow-up."
+            description="JobApply finds the relevant recruiter and sends a short, personalized message automatically."
+            graphic={<RecruiterOutreachGraphic />}
             className="lg:col-span-2 lg:rounded-bl-4xl"
           />
           <BentoCard
