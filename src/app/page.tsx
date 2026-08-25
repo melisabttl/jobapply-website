@@ -42,7 +42,7 @@ function Hero() {
             only stops when it needs you.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href="#">Start my job search</Button>
+            <Button href="#">Start applying</Button>
             <Button variant="secondary" href="/#how-it-works">
               See how it works
             </Button>
