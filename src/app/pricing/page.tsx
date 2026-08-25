@@ -3,7 +3,6 @@ import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient, GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
-import { LogoCloud } from '@/components/logo-cloud'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
@@ -17,92 +16,146 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Companies all over the world have closed millions of deals with Radiant. Sign up today and start selling smarter.',
+    'Choose how much of your job search runs on autopilot. Every JobApply plan builds your Career Profile, finds relevant roles, and tailors every application.',
+}
+
+type BillingPeriod = 'monthly' | 'threeMonth'
+
+// Each plan's price for a billing period carries regularPrice /
+// discountedPrice / discountLabel so a future promotion can be displayed
+// (discountedPrice struck-through against regularPrice, discountLabel shown
+// as a badge) without restructuring this data or the card UI. No promotion
+// is active today, so discountedPrice/discountLabel stay null everywhere.
+type PlanPrice = {
+  billingPeriod: BillingPeriod
+  regularPrice: number
+  discountedPrice: number | null
+  discountLabel: string | null
 }
 
 const tiers = [
   {
     name: 'Starter' as const,
     slug: 'starter',
-    description: 'Everything you need to start selling.',
-    priceMonthly: 99,
+    description: 'Get your applications moving.',
+    pricing: {
+      monthly: {
+        billingPeriod: 'monthly',
+        regularPrice: 9,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+      threeMonth: {
+        billingPeriod: 'threeMonth',
+        regularPrice: 22,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+    } satisfies Record<BillingPeriod, PlanPrice>,
     href: '#',
     highlights: [
-      { description: 'Up to 3 team members' },
-      { description: 'Up to 5 deal progress boards' },
-      { description: 'Source leads from select platforms' },
-      { description: 'RadiantAI integrations', disabled: true },
-      { description: 'Competitor analysis', disabled: true },
+      { description: '50 automated applications / month' },
+      { description: 'Career Profile' },
+      { description: 'Relevant job discovery' },
+      { description: 'Tailored applications' },
+      { description: 'Automatic form completion' },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 3 },
-      { section: 'Features', name: 'Deal progress boards', value: 5 },
-      { section: 'Features', name: 'Sourcing platforms', value: 'Select' },
-      { section: 'Features', name: 'Contacts', value: 100 },
-      { section: 'Features', name: 'AI assisted outreach', value: false },
-      { section: 'Analysis', name: 'Competitor analysis', value: false },
-      { section: 'Analysis', name: 'Dashboard reporting', value: false },
-      { section: 'Analysis', name: 'Community insights', value: false },
-      { section: 'Analysis', name: 'Performance analysis', value: false },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: false },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
+      { section: 'Automation', name: 'Automated applications', value: '50 / month' },
+      { section: 'Automation', name: 'Automatic form completion', value: true },
+      { section: 'Automation', name: 'Application questions', value: true },
+      { section: 'Personalization', name: 'Career Profile', value: true },
+      { section: 'Personalization', name: 'Tailored resume', value: true },
+      { section: 'Personalization', name: 'Tailored cover letter', value: true },
+      { section: 'Personalization', name: 'Company and role context', value: true },
+      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
+      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
+      { section: 'Discovery & organization', name: 'Application tracking', value: true },
+      { section: 'Processing', name: 'Standard processing', value: true },
+      { section: 'Processing', name: 'Priority processing', value: false },
+      { section: 'Processing', name: 'Priority support', value: false },
     ],
   },
   {
-    name: 'Growth' as const,
-    slug: 'growth',
-    description: 'All the extras for your growing team.',
-    priceMonthly: 149,
+    name: 'Pro' as const,
+    slug: 'pro',
+    description: 'Put your applications on autopilot.',
+    pricing: {
+      monthly: {
+        billingPeriod: 'monthly',
+        regularPrice: 19,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+      threeMonth: {
+        billingPeriod: 'threeMonth',
+        regularPrice: 45,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+    } satisfies Record<BillingPeriod, PlanPrice>,
     href: '#',
     highlights: [
-      { description: 'Up to 10 team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 50 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: '5 competitor analyses per month' },
+      { description: 'Tailored resume & cover letter' },
+      { description: 'Application answers' },
+      { description: 'Application tracking' },
+      { description: '150 automated applications / month' },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 10 },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 1000 },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: '5 / month' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
+      { section: 'Automation', name: 'Automated applications', value: '150 / month' },
+      { section: 'Automation', name: 'Automatic form completion', value: true },
+      { section: 'Automation', name: 'Application questions', value: true },
+      { section: 'Personalization', name: 'Career Profile', value: true },
+      { section: 'Personalization', name: 'Tailored resume', value: true },
+      { section: 'Personalization', name: 'Tailored cover letter', value: true },
+      { section: 'Personalization', name: 'Company and role context', value: true },
+      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
+      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
+      { section: 'Discovery & organization', name: 'Application tracking', value: true },
+      { section: 'Processing', name: 'Standard processing', value: true },
+      { section: 'Processing', name: 'Priority processing', value: false },
+      { section: 'Processing', name: 'Priority support', value: false },
     ],
   },
   {
-    name: 'Enterprise' as const,
-    slug: 'enterprise',
-    description: 'Added flexibility to close deals at scale.',
-    priceMonthly: 299,
+    name: 'Max' as const,
+    slug: 'max',
+    description: 'Apply at full speed.',
+    pricing: {
+      monthly: {
+        billingPeriod: 'monthly',
+        regularPrice: 39,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+      threeMonth: {
+        billingPeriod: 'threeMonth',
+        regularPrice: 93,
+        discountedPrice: null,
+        discountLabel: null,
+      },
+    } satisfies Record<BillingPeriod, PlanPrice>,
     href: '#',
     highlights: [
-      { description: 'Unlimited active team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 100 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: 'Unlimited competitor analyses' },
+      { description: 'Everything in Pro' },
+      { description: '400 automated applications / month' },
+      { description: 'Priority processing' },
+      { description: 'Priority support' },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 'Unlimited' },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 'Unlimited' },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: 'Unlimited' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: true },
+      { section: 'Automation', name: 'Automated applications', value: '400 / month' },
+      { section: 'Automation', name: 'Automatic form completion', value: true },
+      { section: 'Automation', name: 'Application questions', value: true },
+      { section: 'Personalization', name: 'Career Profile', value: true },
+      { section: 'Personalization', name: 'Tailored resume', value: true },
+      { section: 'Personalization', name: 'Tailored cover letter', value: true },
+      { section: 'Personalization', name: 'Company and role context', value: true },
+      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
+      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
+      { section: 'Discovery & organization', name: 'Application tracking', value: true },
+      { section: 'Processing', name: 'Standard processing', value: true },
+      { section: 'Processing', name: 'Priority processing', value: true },
+      { section: 'Processing', name: 'Priority support', value: true },
     ],
   },
 ]
@@ -110,32 +163,81 @@ const tiers = [
 function Header() {
   return (
     <Container className="mt-16">
-      <Heading as="h1">Pricing that grows with your team size.</Heading>
+      <Subheading>Pricing</Subheading>
+      <Heading as="h1" className="mt-2">
+        Choose your level of autopilot.
+      </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Companies all over the world have closed millions of deals with Radiant.
-        Sign up today and start selling smarter.
+        Choose the application volume that fits your job search.
       </Lead>
     </Container>
   )
 }
 
-function PricingCards() {
+function BillingToggle({
+  billing,
+  tier,
+}: {
+  billing: BillingPeriod
+  tier: (typeof tiers)[number]
+}) {
+  return (
+    <div className="mb-10 flex justify-center">
+      <div className="inline-flex items-center gap-1 rounded-full bg-gray-100 p-1">
+        <Link
+          scroll={false}
+          href={`/pricing?billing=monthly&tier=${tier.slug}`}
+          data-active={billing === 'monthly' ? true : undefined}
+          className="rounded-full px-4 py-1.5 text-sm/6 font-medium text-gray-600 data-active:bg-white data-active:text-gray-950 data-active:shadow-sm"
+        >
+          Monthly
+        </Link>
+        <Link
+          scroll={false}
+          href={`/pricing?billing=threeMonth&tier=${tier.slug}`}
+          data-active={billing === 'threeMonth' ? true : undefined}
+          className="rounded-full px-4 py-1.5 text-sm/6 font-medium text-gray-600 data-active:bg-white data-active:text-gray-950 data-active:shadow-sm"
+        >
+          3 months · Save 20%
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function PricingCards({
+  billing,
+  selectedTier,
+}: {
+  billing: BillingPeriod
+  selectedTier: (typeof tiers)[number]
+}) {
   return (
     <div className="relative py-24">
       <Gradient className="absolute inset-x-2 top-48 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset" />
       <Container className="relative">
+        <BillingToggle billing={billing} tier={selectedTier} />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {tiers.map((tier, tierIndex) => (
-            <PricingCard key={tierIndex} tier={tier} />
+            <PricingCard key={tierIndex} tier={tier} billing={billing} />
           ))}
         </div>
-        <LogoCloud className="mt-24" />
       </Container>
     </div>
   )
 }
 
-function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
+function PricingCard({
+  tier,
+  billing,
+}: {
+  tier: (typeof tiers)[number]
+  billing: BillingPeriod
+}) {
+  const price = tier.pricing[billing]
+  const amount = price.discountedPrice ?? price.regularPrice
+  const suffix = billing === 'monthly' ? 'per month' : 'total for 3 months'
+
   return (
     <div className="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md">
       <div className="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
@@ -144,19 +246,19 @@ function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
           <p className="mt-2 text-sm/6 text-gray-950/75">{tier.description}</p>
           <div className="mt-8 flex items-center gap-4">
             <div className="text-5xl font-medium text-gray-950">
-              ${tier.priceMonthly}
+              ${amount}
             </div>
             <div className="text-sm/5 text-gray-950/75">
               <p>USD</p>
-              <p>per month</p>
+              <p>{suffix}</p>
             </div>
           </div>
           <div className="mt-8">
-            <Button href={tier.href}>Start a free trial</Button>
+            <Button href={tier.href}>Start applying</Button>
           </div>
           <div className="mt-8">
             <h3 className="text-sm/6 font-medium text-gray-950">
-              Start selling with:
+              What&rsquo;s included:
             </h3>
             <ul className="mt-3 space-y-3">
               {tier.highlights.map((props, featureIndex) => (
@@ -246,13 +348,13 @@ function PricingTable({
             </td>
             <td colSpan={3} className="p-0 text-right">
               <Button variant="outline" href={selectedTier.href}>
-                Get started
+                Start applying
               </Button>
             </td>
           </tr>
           <tr className="max-sm:hidden">
             <th className="p-0" scope="row">
-              <span className="sr-only">Get started</span>
+              <span className="sr-only">Start applying</span>
             </th>
             {tiers.map((tier) => (
               <td
@@ -261,7 +363,7 @@ function PricingTable({
                 className="px-0 pt-4 pb-0 data-selected:table-cell max-sm:hidden"
               >
                 <Button variant="outline" href={tier.href}>
-                  Get started
+                  Start applying
                 </Button>
               </td>
             ))}
@@ -367,48 +469,6 @@ function PlusIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
-function Testimonial() {
-  return (
-    <div className="mx-2 my-24 rounded-4xl bg-gray-900 bg-[url(/dot-texture.svg)] pt-72 pb-24 lg:pt-36">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-[384px_1fr_1fr]">
-          <div className="-mt-96 lg:-mt-52">
-            <div className="-m-2 rounded-4xl bg-white/15 shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:max-w-xs">
-              <div className="rounded-4xl p-2 shadow-md shadow-black/5">
-                <div className="overflow-hidden rounded-3xl shadow-2xl outline outline-1 -outline-offset-1 outline-black/10">
-                  <img
-                    alt=""
-                    src="/testimonials/tina-yards.jpg"
-                    className="aspect-3/4 w-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex max-lg:mt-16 lg:col-span-2 lg:px-16">
-            <figure className="mx-auto flex max-w-xl flex-col gap-16 max-lg:text-center">
-              <blockquote>
-                <p className="relative text-3xl tracking-tight text-white before:absolute before:-translate-x-full before:content-['“'] after:absolute after:content-['”'] lg:text-4xl">
-                  Thanks to Radiant, we&apos;re finding new leads that we never
-                  would have found with legal methods.
-                </p>
-              </blockquote>
-              <figcaption className="mt-auto">
-                <p className="text-sm/6 font-medium text-white">Tina Yards</p>
-                <p className="text-sm/6 font-medium">
-                  <span className="bg-linear-to-r from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] bg-clip-text text-transparent">
-                    VP of Sales, Protocol
-                  </span>
-                </p>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </Container>
-    </div>
-  )
-}
-
 function FrequentlyAskedQuestions() {
   return (
     <Container>
@@ -422,67 +482,56 @@ function FrequentlyAskedQuestions() {
         <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
           <dl>
             <dt className="text-sm font-semibold">
-              What measures are in place to ensure the security of our data?
+              What counts as an application?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Data security is a top priority for us, which is ironic given that
-              our business depends on others not taking it very seriously. We
-              understand that any breach could put both us and most of our
-              customers out of business—and behind bars. We employ robust
-              security measures, including data encryption, secure data centers,
-              and regular security audits to ensure this never happens.
+              An application is counted when JobApply successfully submits an
+              application to an employer on your behalf.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Is there a mobile app available for your platform?
+              Does JobApply send the same resume everywhere?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, we offer a mobile app that provides all the key
-              functionalities of our desktop platform, allowing sales reps to
-              manage deals on the go. Additionally, we have another app
-              pre-installed on most modern smartphones that allows us to track
-              your location, listen to your conversations, and access your
-              camera and microphone at any time. This app is not available for
-              download.
+              No. JobApply uses your Career Profile and the requirements of
+              each role to tailor the application using your real experience.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I customize the workflow to match our company’s deal process?
+              Are cover letters included?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our platform is highly customizable, although there should be
-              no need. Before you sign up, we discreetly gather information
-              about your company and its processes from a variety of sources. We
-              then use this information to pre-configure the platform to match
-              your existing workflows. This is why we ask for your social
-              security number and access to your email account during the
-              sign-up process.
+              Yes. Tailored application materials are included rather than
+              sold as separate personalization add-ons.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              What kind of support do you offer?
+              What happens when I reach my application limit?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              We offer comprehensive support through multiple channels,
-              including 24/7 live chat, email, and phone support. However, since
-              we have full access to your internal network, we will know if
-              you’re having issues before you do.
+              JobApply pauses new automated submissions until your allowance
+              becomes available again or you move to a higher plan.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I integrate the CRM with other sales intelligence tools?
+              Does JobApply apply to every job it finds?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our solution integrates seamlessly with a variety of other
-              systems. However, be warned that most of these integrations are
-              short-lived. We have a dedicated team of engineers who
-              reverse-engineer the APIs of other tools, enabling us to build
-              their functionality into our product and eventually put them out
-              of business.
+              No. Jobs are checked against your preferences, background, and
+              eligibility before they enter the application workflow.
+            </dd>
+          </dl>
+          <dl>
+            <dt className="text-sm font-semibold">
+              Do unused applications roll over?
+            </dt>
+            <dd className="mt-4 text-sm/6 text-gray-600">
+              No. Paid-plan application allowances reset with each billing
+              period.
             </dd>
           </dl>
         </div>
@@ -501,6 +550,8 @@ export default async function Pricing({
     typeof params.tier === 'string'
       ? tiers.find(({ slug }) => slug === params.tier)!
       : tiers[0]
+  let billing: BillingPeriod =
+    params.billing === 'threeMonth' ? 'threeMonth' : 'monthly'
 
   return (
     <main className="overflow-hidden">
@@ -509,9 +560,8 @@ export default async function Pricing({
         <Navbar />
       </Container>
       <Header />
-      <PricingCards />
+      <PricingCards billing={billing} selectedTier={tier} />
       <PricingTable selectedTier={tier} />
-      <Testimonial />
       <FrequentlyAskedQuestions />
       <Footer />
     </main>
