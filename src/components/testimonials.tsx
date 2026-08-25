@@ -1,243 +1,123 @@
-'use client'
-
-import * as Headless from '@headlessui/react'
-import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
-import {
-  MotionValue,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useSpring,
-  type HTMLMotionProps,
-} from 'framer-motion'
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
-import useMeasure, { type RectReadOnly } from 'react-use-measure'
 import { Container } from './container'
-import { Link } from './link'
 import { Heading, Subheading } from './text'
 
+// DEVELOPMENT PLACEHOLDERS — replace with verified user testimonials before
+// production launch. Names, roles, and quotes below are fictional and exist
+// only to validate the "Subtle grid" layout during visual development.
+// Avatars are temporarily reused from the Tailwind Plus reference
+// (reference/tailwind-testimonials/subtle-grid.jsx) so the layout can be
+// judged without sourcing new images — swap every avatarUrl for a real,
+// user-approved photo before launch.
 const testimonials = [
   {
-    img: '/testimonials/tina-yards.jpg',
-    name: 'Tina Yards',
-    title: 'VP of Sales, Protocol',
     quote:
-      'Thanks to Radiant, we’re finding new leads that we never would have found with legal methods.',
+      'Before this, I would finish work, eat dinner, and then spend another two or three hours applying to jobs. Most nights I was just exhausted. Now I can set things up once, let applications move in the background, and use that time to actually prepare for interviews.',
+    name: 'Maya Chen',
+    role: 'Product Manager',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
   {
-    img: '/testimonials/conor-neville.jpg',
-    name: 'Conor Neville',
-    title: 'Head of Customer Success, TaxPal',
     quote:
-      'Radiant made undercutting all of our competitors an absolute breeze.',
+      'I kept telling myself I would apply to more jobs after work, but by the time I got home I never had the energy to rewrite my resume and fill out another form. Having that repetitive part handled for me has made it much easier to stay consistent.',
+    name: 'Daniel Brooks',
+    role: 'Software Engineer',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
   {
-    img: '/testimonials/amy-chase.jpg',
-    name: 'Amy Chase',
-    title: 'Head of GTM, Pocket',
     quote:
-      'We closed a deal in literally a few minutes because we knew their exact budget.',
+      'I used to have five different versions of my resume on my desktop and I was constantly wondering which one I had sent where. Now I add my experience once and each application is adapted to the role without me rebuilding everything from scratch.',
+    name: 'Sofia Marin',
+    role: 'UX Designer',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
   {
-    img: '/testimonials/veronica-winton.jpg',
-    name: 'Veronica Winton',
-    title: 'CSO, Planeteria',
     quote:
-      'We’ve managed to put two of our main competitors out of business in 6 months.',
+      'My job search was basically twenty browser tabs, a spreadsheet, LinkedIn, cover letters, and a lot of copy and paste. It felt messy all the time. Having one place that keeps the process moving has taken a lot of that stress away.',
+    name: 'Marcus Lee',
+    role: 'Marketing Manager',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
   {
-    img: '/testimonials/dillon-lenora.jpg',
-    name: 'Dillon Lenora',
-    title: 'VP of Sales, Detax',
-    quote: 'I was able to replace 80% of my team with RadiantAI bots.',
+    quote:
+      'There was a point where I felt like applying for jobs had become my second job. I was spending so much time on applications that I barely had time to prepare when someone actually wanted to speak with me. Now I can focus much more on the interview side.',
+    name: 'Priya Shah',
+    role: 'Data Analyst',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
   {
-    img: '/testimonials/harriet-arron.jpg',
-    name: 'Harriet Arron',
-    title: 'Account Manager, Commit',
     quote:
-      'I’ve smashed all my targets without having to speak to a lead in months.',
+      'The part I hated most was answering the same questions over and over — work history, experience, links, cover letters, the same basic information every time. It sounds small, but not having to repeat all of that manually makes the whole process feel much lighter.',
+    name: 'Emma Wilson',
+    role: 'Customer Success Manager',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    quote:
+      'I was nervous about using automation because I didn’t want every company receiving the exact same generic application. What I like is that the application can still change around the role while using the experience and projects I actually gave it.',
+    name: 'Leo Martins',
+    role: 'Product Designer',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    quote:
+      'I used to keep my own spreadsheet because after a few weeks I honestly couldn’t remember where I had applied or which version of my resume I had used. Having everything organized in one place means I don’t have to manage the job search like a project anymore.',
+    name: 'Nadia Hassan',
+    role: 'Operations Manager',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    quote:
+      'One Saturday I realized I had spent almost the entire afternoon applying and had barely made a dent in the roles I saved. That was the moment I knew I needed a different way to do this. I’d rather spend my weekend improving my skills or preparing for conversations than filling out forms.',
+    name: 'Ethan Parker',
+    role: 'Frontend Engineer',
+    avatarUrl:
+      'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
 ]
 
-function TestimonialCard({
-  name,
-  title,
-  img,
-  children,
-  bounds,
-  scrollX,
-  ...props
-}: {
-  img: string
-  name: string
-  title: string
-  children: React.ReactNode
-  bounds: RectReadOnly
-  scrollX: MotionValue<number>
-} & HTMLMotionProps<'div'>) {
-  let [element, setElement] = useState<HTMLDivElement | null>(null)
-  let computeOpacity = useCallback(() => {
-    if (!element || bounds.width === 0) return 1
-
-    let rect = element.getBoundingClientRect()
-
-    if (rect.left < bounds.left) {
-      let diff = bounds.left - rect.left
-      let percent = diff / rect.width
-      return Math.max(0.5, 1 - percent)
-    } else if (rect.right > bounds.right) {
-      let diff = rect.right - bounds.right
-      let percent = diff / rect.width
-      return Math.max(0.5, 1 - percent)
-    } else {
-      return 1
-    }
-  }, [element, bounds.width, bounds.left, bounds.right])
-
-  let opacity = useSpring(computeOpacity(), {
-    stiffness: 154,
-    damping: 23,
-  })
-
-  useLayoutEffect(() => {
-    opacity.set(computeOpacity())
-  }, [computeOpacity, opacity])
-
-  useMotionValueEvent(scrollX, 'change', () => {
-    opacity.set(computeOpacity())
-  })
-
-  return (
-    <motion.div
-      ref={setElement}
-      style={{ opacity }}
-      {...props}
-      className="relative flex aspect-9/16 w-72 shrink-0 snap-start scroll-ml-(--scroll-padding) flex-col justify-end overflow-hidden rounded-3xl sm:aspect-3/4 sm:w-96"
-    >
-      <img
-        alt=""
-        src={img}
-        className="absolute inset-x-0 top-0 aspect-square w-full object-cover"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 rounded-3xl bg-linear-to-t from-black from-[calc(7/16*100%)] ring-1 ring-gray-950/10 ring-inset sm:from-25%"
-      />
-      <figure className="relative p-10">
-        <blockquote>
-          <p className="relative text-xl/7 text-white">
-            <span aria-hidden="true" className="absolute -translate-x-full">
-              “
-            </span>
-            {children}
-            <span aria-hidden="true" className="absolute">
-              ”
-            </span>
-          </p>
-        </blockquote>
-        <figcaption className="mt-6 border-t border-white/20 pt-6">
-          <p className="text-sm/6 font-medium text-white">{name}</p>
-          <p className="text-sm/6 font-medium">
-            <span className="bg-linear-to-r from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] bg-clip-text text-transparent">
-              {title}
-            </span>
-          </p>
-        </figcaption>
-      </figure>
-    </motion.div>
-  )
-}
-
-function CallToAction() {
-  return (
-    <div>
-      <p className="max-w-sm text-sm/6 text-gray-600">
-        Join the best sellers in the business and start using Radiant to hit
-        your targets today.
-      </p>
-      <div className="mt-2">
-        <Link
-          href="#"
-          className="inline-flex items-center gap-2 text-sm/6 font-medium text-pink-600"
-        >
-          Get started
-          <ArrowLongRightIcon className="size-5" />
-        </Link>
-      </div>
-    </div>
-  )
-}
-
 export function Testimonials() {
-  let scrollRef = useRef<HTMLDivElement | null>(null)
-  let { scrollX } = useScroll({ container: scrollRef })
-  let [setReferenceWindowRef, bounds] = useMeasure()
-  let [activeIndex, setActiveIndex] = useState(0)
-
-  useMotionValueEvent(scrollX, 'change', (x) => {
-    setActiveIndex(Math.floor(x / scrollRef.current!.children[0].clientWidth))
-  })
-
-  function scrollTo(index: number) {
-    let gap = 32
-    let width = (scrollRef.current!.children[0] as HTMLElement).offsetWidth
-    scrollRef.current!.scrollTo({ left: (width + gap) * index })
-  }
-
   return (
-    <div className="overflow-hidden py-32">
+    <div className="py-32">
       <Container>
-        <div ref={setReferenceWindowRef}>
-          <Subheading>What everyone is saying</Subheading>
-          <Heading as="h3" className="mt-2">
-            Trusted by professionals.
-          </Heading>
-        </div>
-      </Container>
-      <div
-        ref={scrollRef}
-        className={clsx([
-          'mt-16 flex gap-8 px-(--scroll-padding)',
-          'scrollbar-none [&::-webkit-scrollbar]:hidden',
-          'snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth',
-          '[--scroll-padding:max(--spacing(6),calc((100vw-(var(--container-2xl)))/2))] lg:[--scroll-padding:max(--spacing(8),calc((100vw-(var(--container-7xl)))/2))]',
-        ])}
-      >
-        {testimonials.map(({ img, name, title, quote }, testimonialIndex) => (
-          <TestimonialCard
-            key={testimonialIndex}
-            name={name}
-            title={title}
-            img={img}
-            bounds={bounds}
-            scrollX={scrollX}
-            onClick={() => scrollTo(testimonialIndex)}
-          >
-            {quote}
-          </TestimonialCard>
-        ))}
-        <div className="w-2xl shrink-0 sm:w-216" />
-      </div>
-      <Container className="mt-16">
-        <div className="flex justify-between">
-          <CallToAction />
-          <div className="hidden sm:flex sm:gap-2">
-            {testimonials.map(({ name }, testimonialIndex) => (
-              <Headless.Button
-                key={testimonialIndex}
-                onClick={() => scrollTo(testimonialIndex)}
-                data-active={
-                  activeIndex === testimonialIndex ? true : undefined
-                }
-                aria-label={`Scroll to testimonial from ${name}`}
-                className={clsx(
-                  'size-2.5 rounded-full border border-transparent bg-gray-300 transition',
-                  'data-active:bg-gray-400 data-hover:bg-gray-400',
-                  'forced-colors:data-active:bg-[Highlight] forced-colors:data-focus:outline-offset-4',
-                )}
-              />
+        <Subheading>What job seekers say</Subheading>
+        <Heading as="h3" className="mt-2 max-w-3xl">
+          Less time applying. More time moving forward.
+        </Heading>
+
+        <div className="mt-10 flow-root sm:mt-16">
+          <div className="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-3">
+            {testimonials.map((testimonial) => (
+              <div
+                key={testimonial.name}
+                className="pt-8 sm:inline-block sm:w-full sm:px-4"
+              >
+                <figure className="rounded-2xl bg-gray-50 p-8 text-sm/6 shadow-xs ring-1 ring-black/5">
+                  <blockquote className="text-gray-950">
+                    <p>{`“${testimonial.quote}”`}</p>
+                  </blockquote>
+                  <figcaption className="mt-6 flex items-center gap-x-4">
+                    <img
+                      alt=""
+                      src={testimonial.avatarUrl}
+                      className="size-10 rounded-full bg-gray-100"
+                    />
+                    <div>
+                      <div className="font-semibold text-gray-950">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-gray-600">{testimonial.role}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </div>
             ))}
           </div>
         </div>
