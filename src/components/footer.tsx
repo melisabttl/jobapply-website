@@ -1,4 +1,5 @@
 import { PlusGrid, PlusGridItem, PlusGridRow } from '@/components/plus-grid'
+import { EASLI_APP_LOGIN_URL, EASLI_APP_REGISTER_URL } from '@/lib/auth'
 import { Button } from './button'
 import { Container } from './container'
 import { Gradient } from './gradient'
@@ -19,7 +20,7 @@ function CallToAction() {
         tailors each application, and applies for you.
       </p>
       <div className="mt-6">
-        <Button className="w-full sm:w-auto" href="/signup">
+        <Button className="w-full sm:w-auto" href={EASLI_APP_REGISTER_URL}>
           Start applying
         </Button>
       </div>
@@ -66,8 +67,8 @@ function Sitemap() {
       <div>
         <SitemapHeading>Account</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="/login">Sign in</SitemapLink>
-          <SitemapLink href="/signup">Start applying</SitemapLink>
+          <SitemapLink href={EASLI_APP_LOGIN_URL}>Sign in</SitemapLink>
+          <SitemapLink href={EASLI_APP_REGISTER_URL}>Start applying</SitemapLink>
         </SitemapLinks>
       </div>
       <div>

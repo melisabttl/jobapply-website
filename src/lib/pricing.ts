@@ -170,7 +170,3 @@ export function planPrice(plan: Plan, billing: BillingPeriod) {
     suffix: billing === 'monthly' ? 'per month' : 'total for 3 months',
   }
 }
-
-export function signupHref(plan: Plan, billing: BillingPeriod) {
-  return `/signup?plan=${plan.slug}&billing=${billing}`
-}

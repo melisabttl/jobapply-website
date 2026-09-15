@@ -7,6 +7,7 @@ import {
 } from '@headlessui/react'
 import { Bars2Icon } from '@heroicons/react/24/solid'
 import { motion } from 'framer-motion'
+import { EASLI_APP_LOGIN_URL, EASLI_APP_REGISTER_URL } from '@/lib/auth'
 import { Button } from './button'
 import { Link } from './link'
 import { PlusGrid, PlusGridItem, PlusGridRow } from './plus-grid'
@@ -15,10 +16,10 @@ const links = [
   { href: '/#product', label: 'Product' },
   { href: '/#how-it-works', label: 'How it works' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/login', label: 'Log in' },
+  { href: EASLI_APP_LOGIN_URL, label: 'Log in' },
 ]
 
-const getStartedHref = '/signup'
+const getStartedHref = EASLI_APP_REGISTER_URL
 
 function DesktopNav() {
   return (

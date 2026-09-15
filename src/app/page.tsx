@@ -17,6 +17,7 @@ import { Screenshot } from '@/components/screenshot'
 import { TailoredApplicationsGraphic } from '@/components/tailored-applications-graphic'
 import { Testimonials } from '@/components/testimonials'
 import { Heading, Subheading } from '@/components/text'
+import { EASLI_APP_REGISTER_URL } from '@/lib/auth'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ function Hero() {
             experience, and submits them automatically.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href="/signup">Start applying</Button>
+            <Button href={EASLI_APP_REGISTER_URL}>Start applying</Button>
             <Button variant="secondary" href="/#how-it-works">
               See how it works
             </Button>

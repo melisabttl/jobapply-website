@@ -5,11 +5,11 @@ import { Gradient, GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
+import { EASLI_APP_REGISTER_URL } from '@/lib/auth'
 import {
   type BillingPeriod,
   resolveBilling,
   resolvePlan,
-  signupHref,
   tiers,
 } from '@/lib/pricing'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
@@ -121,7 +121,7 @@ function PricingCard({
             </div>
           </div>
           <div className="mt-8">
-            <Button href={signupHref(tier, billing)}>Start applying</Button>
+            <Button href={EASLI_APP_REGISTER_URL}>Start applying</Button>
           </div>
           <div className="mt-8">
             <h3 className="text-sm/6 font-medium text-gray-950">
@@ -216,7 +216,7 @@ function PricingTable({
               </div>
             </td>
             <td colSpan={3} className="p-0 text-right">
-              <Button variant="outline" href={signupHref(selectedTier, billing)}>
+              <Button variant="outline" href={EASLI_APP_REGISTER_URL}>
                 Start applying
               </Button>
             </td>
@@ -231,7 +231,7 @@ function PricingTable({
                 data-selected={selectedTier === tier ? true : undefined}
                 className="px-0 pt-4 pb-0 data-selected:table-cell max-sm:hidden"
               >
-                <Button variant="outline" href={signupHref(tier, billing)}>
+                <Button variant="outline" href={EASLI_APP_REGISTER_URL}>
                   Start applying
                 </Button>
               </td>
