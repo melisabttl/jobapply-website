@@ -18,6 +18,8 @@ const links = [
   { href: '/login', label: 'Log in' },
 ]
 
+const getStartedHref = '/signup'
+
 function DesktopNav() {
   return (
     <nav className="relative hidden lg:flex lg:items-center">
@@ -32,7 +34,7 @@ function DesktopNav() {
         </PlusGridItem>
       ))}
       <PlusGridItem className="flex items-center py-3 pl-2">
-        <Button href="#">Get started</Button>
+        <Button href={getStartedHref}>Get started</Button>
       </PlusGridItem>
     </nav>
   )
@@ -78,7 +80,7 @@ function MobileNav() {
             rotateX: { duration: 0.3, delay: links.length * 0.1 },
           }}
         >
-          <Button href="#" className="w-full">
+          <Button href={getStartedHref} className="w-full">
             Get started
           </Button>
         </motion.div>
@@ -99,9 +101,7 @@ export function Navbar({ banner }: { banner?: React.ReactNode }) {
           <div className="relative flex gap-6">
             <PlusGridItem className="py-3">
               <Link href="/" title="Home" className="flex h-9 items-center">
-                <span className="text-xl font-semibold tracking-tight text-gray-950">
-                  JobApply
-                </span>
+                <img src="/brand/easli-logo.svg" alt="Easli" className="h-7 w-auto" />
               </Link>
             </PlusGridItem>
             {banner && (

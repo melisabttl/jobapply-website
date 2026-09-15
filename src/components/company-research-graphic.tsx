@@ -3,7 +3,6 @@
 import { clsx } from 'clsx'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Mark } from './logo'
 
 type Satellite = {
   key: string
@@ -83,7 +82,7 @@ export function CompanyResearchGraphic() {
           ))}
         </svg>
         <span className="absolute top-1/2 left-1/2 flex size-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-linear-to-t from-white/10 to-white/30 ring-1 ring-white/20">
-          <Mark className="h-3 fill-white" />
+          <img src="/brand/easli-symbol-white.svg" alt="" className="h-3 w-auto" />
         </span>
         {satellites.map((sat, i) => (
           <span

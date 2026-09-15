@@ -3,7 +3,6 @@ import { Button } from './button'
 import { Container } from './container'
 import { Gradient } from './gradient'
 import { Link } from './link'
-import { Mark } from './logo'
 import { Subheading } from './text'
 
 function CallToAction() {
@@ -16,11 +15,11 @@ function CallToAction() {
         </p>
       </hgroup>
       <p className="mx-auto mt-6 max-w-md text-sm/6 text-gray-500">
-        Set up your career profile once. JobApply finds relevant roles,
+        Set up your career profile once. Easli finds relevant roles,
         tailors each application, and applies for you.
       </p>
       <div className="mt-6">
-        <Button className="w-full sm:w-auto" href="#">
+        <Button className="w-full sm:w-auto" href="/signup">
           Start applying
         </Button>
       </div>
@@ -47,39 +46,35 @@ function SitemapLink(props: React.ComponentPropsWithoutRef<typeof Link>) {
   )
 }
 
-// TODO: replace placeholder footer links when routes are implemented.
 function Sitemap() {
   return (
     <>
       <div>
         <SitemapHeading>Product</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="#">How it works</SitemapLink>
-          <SitemapLink href="#">Auto Apply</SitemapLink>
-          <SitemapLink href="#">Tailored applications</SitemapLink>
+          <SitemapLink href="/#how-it-works">How it works</SitemapLink>
           <SitemapLink href="/pricing">Pricing</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
         <SitemapHeading>Resources</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="#">Help center</SitemapLink>
-          <SitemapLink href="#">Contact</SitemapLink>
+          <SitemapLink href="/help">Help</SitemapLink>
+          <SitemapLink href="/contact">Contact</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
-        <SitemapHeading>Company</SitemapHeading>
+        <SitemapHeading>Account</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="/company">About</SitemapLink>
-          <SitemapLink href="/blog">Blog</SitemapLink>
-          <SitemapLink href="#">Careers</SitemapLink>
+          <SitemapLink href="/login">Sign in</SitemapLink>
+          <SitemapLink href="/signup">Start applying</SitemapLink>
         </SitemapLinks>
       </div>
       <div>
         <SitemapHeading>Legal</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="#">Privacy policy</SitemapLink>
-          <SitemapLink href="#">Terms of service</SitemapLink>
+          <SitemapLink href="/privacy">Privacy policy</SitemapLink>
+          <SitemapLink href="/terms">Terms of service</SitemapLink>
         </SitemapLinks>
       </div>
     </>
@@ -89,7 +84,7 @@ function Sitemap() {
 function Copyright() {
   return (
     <div className="text-sm/6 text-gray-950">
-      &copy; {new Date().getFullYear()} JobApply
+      &copy; {new Date().getFullYear()} Easli
     </div>
   )
 }
@@ -111,10 +106,11 @@ export function Footer() {
                       title="Home"
                       className="flex items-center gap-2"
                     >
-                      <Mark className="h-9 fill-black" />
-                      <span className="text-lg font-semibold tracking-tight text-gray-950">
-                        JobApply
-                      </span>
+                      <img
+                        src="/brand/easli-logo.svg"
+                        alt="Easli"
+                        className="h-9 w-auto"
+                      />
                     </Link>
                     <p className="mt-4 text-sm/6 text-gray-500">
                       Your job search, on autopilot.

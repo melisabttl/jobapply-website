@@ -1,0 +1,11 @@
+{
+  "brand": "Easli",
+  "domain": "easli.co",
+  "logoColor": "#222A3A",
+  "usage": {
+    "lightBackground": "easli-logo.svg",
+    "darkBackground": "easli-logo-white.svg",
+    "symbol": "easli-symbol.svg",
+    "favicon": "favicon.svg"
+  }
+}

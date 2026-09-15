@@ -2,7 +2,6 @@
 
 import { clsx } from 'clsx'
 import { motion } from 'framer-motion'
-import { Mark } from './logo'
 
 function Circle({
   size,
@@ -54,7 +53,7 @@ function Circles() {
 function MainLogo() {
   return (
     <div className="absolute top-32 left-44 flex size-16 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-black/5">
-      <Mark className="h-9 fill-black" />
+      <img src="/brand/easli-symbol.svg" alt="Easli" className="h-9 w-auto" />
     </div>
   )
 }
@@ -174,7 +173,7 @@ const positions = [
   { left: 96, top: 176, hover: { x: -3, y: 5, rotate: 3, delay: 0.15 } },
 ]
 
-// The 6 job platforms JobApply is connected to.
+// The 6 job platforms Easli is connected to.
 const connectedSources: ConnectedSource[] = [
   {
     name: 'Indeed',

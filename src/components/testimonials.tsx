@@ -13,7 +13,7 @@ const testimonials = [
     quote:
       'Before this, I would finish work, eat dinner, and then spend another two or three hours applying to jobs. Most nights I was just exhausted. Now I can set things up once, let applications move in the background, and use that time to actually prepare for interviews.',
     name: 'Maya Chen',
-    role: 'Product Manager',
+    role: 'Junior UX/UI Designer',
     avatarUrl:
       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -21,7 +21,7 @@ const testimonials = [
     quote:
       'I kept telling myself I would apply to more jobs after work, but by the time I got home I never had the energy to rewrite my resume and fill out another form. Having that repetitive part handled for me has made it much easier to stay consistent.',
     name: 'Daniel Brooks',
-    role: 'Software Engineer',
+    role: 'Graduate Software Engineer',
     avatarUrl:
       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -29,7 +29,7 @@ const testimonials = [
     quote:
       'I used to have five different versions of my resume on my desktop and I was constantly wondering which one I had sent where. Now I add my experience once and each application is adapted to the role without me rebuilding everything from scratch.',
     name: 'Sofia Marin',
-    role: 'UX Designer',
+    role: 'Marketing Coordinator',
     avatarUrl:
       'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -37,7 +37,7 @@ const testimonials = [
     quote:
       'My job search was basically twenty browser tabs, a spreadsheet, LinkedIn, cover letters, and a lot of copy and paste. It felt messy all the time. Having one place that keeps the process moving has taken a lot of that stress away.',
     name: 'Marcus Lee',
-    role: 'Marketing Manager',
+    role: 'Junior Data Analyst',
     avatarUrl:
       'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -45,7 +45,7 @@ const testimonials = [
     quote:
       'There was a point where I felt like applying for jobs had become my second job. I was spending so much time on applications that I barely had time to prepare when someone actually wanted to speak with me. Now I can focus much more on the interview side.',
     name: 'Priya Shah',
-    role: 'Data Analyst',
+    role: 'Customer Success Associate',
     avatarUrl:
       'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -53,7 +53,7 @@ const testimonials = [
     quote:
       'The part I hated most was answering the same questions over and over — work history, experience, links, cover letters, the same basic information every time. It sounds small, but not having to repeat all of that manually makes the whole process feel much lighter.',
     name: 'Emma Wilson',
-    role: 'Customer Success Manager',
+    role: 'Sales Development Representative',
     avatarUrl:
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -61,7 +61,7 @@ const testimonials = [
     quote:
       'I was nervous about using automation because I didn’t want every company receiving the exact same generic application. What I like is that the application can still change around the role while using the experience and projects I actually gave it.',
     name: 'Leo Martins',
-    role: 'Product Designer',
+    role: 'Operations Coordinator',
     avatarUrl:
       'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -69,7 +69,7 @@ const testimonials = [
     quote:
       'I used to keep my own spreadsheet because after a few weeks I honestly couldn’t remember where I had applied or which version of my resume I had used. Having everything organized in one place means I don’t have to manage the job search like a project anymore.',
     name: 'Nadia Hassan',
-    role: 'Operations Manager',
+    role: 'Associate Product Manager',
     avatarUrl:
       'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },
@@ -77,7 +77,7 @@ const testimonials = [
     quote:
       'One Saturday I realized I had spent almost the entire afternoon applying and had barely made a dent in the roles I saved. That was the moment I knew I needed a different way to do this. I’d rather spend my weekend improving my skills or preparing for conversations than filling out forms.',
     name: 'Ethan Parker',
-    role: 'Frontend Engineer',
+    role: 'Junior Project Manager',
     avatarUrl:
       'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
   },

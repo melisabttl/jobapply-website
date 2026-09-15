@@ -20,8 +20,9 @@ import { Heading, Subheading } from '@/components/text'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  title: { absolute: 'Easli — Your applications, on autopilot' },
   description:
-    'Radiant helps you sell more by revealing sensitive information about your customers.',
+    'Set up your career profile once. Easli finds relevant roles, tailors every application, and applies for you automatically.',
 }
 
 function Hero() {
@@ -32,17 +33,15 @@ function Hero() {
         <Navbar />
         <div className="pt-12 pb-24 sm:pt-20 sm:pb-32 md:pt-28 md:pb-48">
           <h1 className="font-display text-6xl/[0.9] font-medium tracking-tight text-balance text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
-            Your job search,
+            Your job applications,
             <br className="hidden sm:inline" /> on autopilot.
           </h1>
           <p className="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
-            Set up your career profile once. JobApply finds relevant roles,
-            checks fit and eligibility, tailors every application from your
-            real experience, applies automatically when it&rsquo;s safe, and
-            only stops when it needs you.
+            Easli finds relevant roles, tailors every application to your
+            experience, and submits them automatically.
           </p>
           <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href="#">Start applying</Button>
+            <Button href="/signup">Start applying</Button>
             <Button variant="secondary" href="/#how-it-works">
               See how it works
             </Button>
@@ -61,7 +60,7 @@ function FeatureSection() {
           Your entire application process, in one place.
         </Heading>
         {/* TODO: placeholder Radiant screenshot — replace before launch with
-            the real authenticated JobApply Home / application-overview
+            the real authenticated Easli Home / application-overview
             screenshot. Framing/sizing below is Radiant's existing treatment,
             kept intact so the real screenshot can drop in unchanged. */}
         <Screenshot
@@ -80,14 +79,14 @@ function BentoSection() {
     <Container>
       <Subheading>Your career</Subheading>
       <Heading as="h3" className="mt-2 max-w-3xl">
-        JobApply knows what you’ve actually done.
+        Easli knows what you’ve actually done.
       </Heading>
 
       <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
         <BentoCard
           eyebrow="Tailored applications"
           title="A tailored application for every job."
-          description="JobApply uses the background you provide to create a tailored resume and cover letter for every job it applies to."
+          description="Easli uses the background you provide to create a tailored resume and cover letter for every job it applies to."
           graphic={<TailoredApplicationsGraphic />}
           fade={['bottom']}
           className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
@@ -95,7 +94,7 @@ function BentoSection() {
         <BentoCard
           eyebrow="Auto apply"
           title="Apply to 200+ jobs a day."
-          description="JobApply finds relevant roles, tailors your resume and cover letter, completes the application, and submits it for you — automatically."
+          description="Easli finds relevant roles, tailors your resume and cover letter, completes the application, and submits it for you — automatically."
           graphic={<AutoApplyGraphic />}
           fade={['bottom']}
           className="lg:col-span-3 lg:rounded-tr-4xl"
@@ -103,21 +102,21 @@ function BentoSection() {
         <BentoCard
           eyebrow="Background"
           title="Start with anything you already have."
-          description="Add your CV, portfolio, projects, documents, links, or notes. JobApply organizes the rest."
+          description="Add your CV, portfolio, projects, documents, links, or notes. Easli organizes the rest."
           graphic={<AddBackgroundGraphic />}
           className="lg:col-span-2 lg:rounded-bl-4xl"
         />
         <BentoCard
           eyebrow="Connected sources"
           title="Connected to where jobs are posted."
-          description="JobApply pulls relevant roles from job platforms into one place, so you don’t have to search each one separately."
+          description="Easli pulls relevant roles from job platforms into one place, so you don’t have to search each one separately."
           graphic={<LogoCluster />}
           className="lg:col-span-2"
         />
         <BentoCard
           eyebrow="Discovery"
           title="Find jobs wherever you want to work."
-          description="JobApply searches across the locations and remote markets you choose, then brings the relevant roles to you."
+          description="Easli searches across the locations and remote markets you choose, then brings the relevant roles to you."
           graphic={<Map />}
           className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
         />
@@ -135,7 +134,7 @@ function DarkBentoSection() {
           More than clicking Apply.
         </Heading>
         <p className="mt-4 max-w-2xl text-lg/7 text-gray-400">
-          JobApply doesn&rsquo;t just find jobs — it completes the real
+          Easli doesn&rsquo;t just find jobs — it completes the real
           application work for you.
         </p>
 
@@ -144,7 +143,7 @@ function DarkBentoSection() {
             dark
             eyebrow="Application forms"
             title="Every field, filled for you."
-            description="JobApply completes application forms using the information already stored in your Career Profile."
+            description="Easli completes application forms using the information already stored in your Career Profile."
             graphic={<ApplicationFormGraphic />}
             className="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl"
           />
@@ -152,7 +151,7 @@ function DarkBentoSection() {
             dark
             eyebrow="Application answers"
             title="Questions answered automatically."
-            description="JobApply writes role-specific answers using your background, the job description, and relevant company context."
+            description="Easli writes role-specific answers using your background, the job description, and relevant company context."
             graphic={<ApplicationAnswersGraphic />}
             className="lg:col-span-2 lg:rounded-tr-4xl"
           />
@@ -160,7 +159,7 @@ function DarkBentoSection() {
             dark
             eyebrow="Recruiter outreach"
             title="High-match roles get a personal follow-up."
-            description="JobApply finds the relevant recruiter and sends a short, personalized message automatically."
+            description="Easli finds the relevant recruiter and sends a short, personalized message automatically."
             graphic={<RecruiterOutreachGraphic />}
             className="lg:col-span-2 lg:rounded-bl-4xl"
           />
@@ -184,14 +183,16 @@ export default function Home() {
       <Hero />
       <main>
         <Container className="mt-10 -mb-6">
-          <p className="text-center text-sm/6 font-medium text-gray-500">
-            Find jobs across the platforms that matter.
-          </p>
-          <LogoCloud className="mt-11" />
+          <LogoCloud />
         </Container>
-        <div className="bg-linear-to-b from-white from-50% to-gray-100 py-32">
+        <div
+          id="product"
+          className="bg-linear-to-b from-white from-50% to-gray-100 py-32"
+        >
           <FeatureSection />
-          <BentoSection />
+          <div id="how-it-works">
+            <BentoSection />
+          </div>
         </div>
         <DarkBentoSection />
       </main>

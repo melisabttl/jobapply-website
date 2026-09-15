@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { Mark } from './logo'
 
 type QA = { question: string; answer: string }
 
@@ -47,7 +46,7 @@ export function ApplicationAnswersGraphic() {
       className="flex size-full flex-col items-center justify-center gap-3 px-6 sm:px-8"
     >
       <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-linear-to-t from-white/5 to-white/25 ring-1 ring-white/10">
-        <Mark className="h-3.5 fill-white" />
+        <img src="/brand/easli-symbol-white.svg" alt="" className="h-3.5 w-auto" />
       </span>
 
       {/* `variants` here rely on BentoCard's hover propagation on purpose:

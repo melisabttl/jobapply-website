@@ -5,6 +5,13 @@ import { Gradient, GradientBackground } from '@/components/gradient'
 import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
+import {
+  type BillingPeriod,
+  resolveBilling,
+  resolvePlan,
+  signupHref,
+  tiers,
+} from '@/lib/pricing'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
   CheckIcon,
@@ -16,149 +23,8 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Choose how much of your job search runs on autopilot. Every JobApply plan builds your Career Profile, finds relevant roles, and tailors every application.',
+    'Choose how much of your job search runs on autopilot. Every Easli plan builds your Career Profile, finds relevant roles, and tailors every application.',
 }
-
-type BillingPeriod = 'monthly' | 'threeMonth'
-
-// Each plan's price for a billing period carries regularPrice /
-// discountedPrice / discountLabel so a future promotion can be displayed
-// (discountedPrice struck-through against regularPrice, discountLabel shown
-// as a badge) without restructuring this data or the card UI. No promotion
-// is active today, so discountedPrice/discountLabel stay null everywhere.
-type PlanPrice = {
-  billingPeriod: BillingPeriod
-  regularPrice: number
-  discountedPrice: number | null
-  discountLabel: string | null
-}
-
-const tiers = [
-  {
-    name: 'Starter' as const,
-    slug: 'starter',
-    description: 'Get your applications moving.',
-    pricing: {
-      monthly: {
-        billingPeriod: 'monthly',
-        regularPrice: 9,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-      threeMonth: {
-        billingPeriod: 'threeMonth',
-        regularPrice: 22,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-    } satisfies Record<BillingPeriod, PlanPrice>,
-    href: '#',
-    highlights: [
-      { description: '50 automated applications / month' },
-      { description: 'Career Profile' },
-      { description: 'Relevant job discovery' },
-      { description: 'Tailored applications' },
-      { description: 'Automatic form completion' },
-    ],
-    features: [
-      { section: 'Automation', name: 'Automated applications', value: '50 / month' },
-      { section: 'Automation', name: 'Automatic form completion', value: true },
-      { section: 'Automation', name: 'Application questions', value: true },
-      { section: 'Personalization', name: 'Career Profile', value: true },
-      { section: 'Personalization', name: 'Tailored resume', value: true },
-      { section: 'Personalization', name: 'Tailored cover letter', value: true },
-      { section: 'Personalization', name: 'Company and role context', value: true },
-      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
-      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
-      { section: 'Discovery & organization', name: 'Application tracking', value: true },
-      { section: 'Processing', name: 'Standard processing', value: true },
-      { section: 'Processing', name: 'Priority processing', value: false },
-      { section: 'Processing', name: 'Priority support', value: false },
-    ],
-  },
-  {
-    name: 'Pro' as const,
-    slug: 'pro',
-    description: 'Put your applications on autopilot.',
-    pricing: {
-      monthly: {
-        billingPeriod: 'monthly',
-        regularPrice: 19,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-      threeMonth: {
-        billingPeriod: 'threeMonth',
-        regularPrice: 45,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-    } satisfies Record<BillingPeriod, PlanPrice>,
-    href: '#',
-    highlights: [
-      { description: 'Tailored resume & cover letter' },
-      { description: 'Application answers' },
-      { description: 'Application tracking' },
-      { description: '150 automated applications / month' },
-    ],
-    features: [
-      { section: 'Automation', name: 'Automated applications', value: '150 / month' },
-      { section: 'Automation', name: 'Automatic form completion', value: true },
-      { section: 'Automation', name: 'Application questions', value: true },
-      { section: 'Personalization', name: 'Career Profile', value: true },
-      { section: 'Personalization', name: 'Tailored resume', value: true },
-      { section: 'Personalization', name: 'Tailored cover letter', value: true },
-      { section: 'Personalization', name: 'Company and role context', value: true },
-      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
-      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
-      { section: 'Discovery & organization', name: 'Application tracking', value: true },
-      { section: 'Processing', name: 'Standard processing', value: true },
-      { section: 'Processing', name: 'Priority processing', value: false },
-      { section: 'Processing', name: 'Priority support', value: false },
-    ],
-  },
-  {
-    name: 'Max' as const,
-    slug: 'max',
-    description: 'Apply at full speed.',
-    pricing: {
-      monthly: {
-        billingPeriod: 'monthly',
-        regularPrice: 39,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-      threeMonth: {
-        billingPeriod: 'threeMonth',
-        regularPrice: 93,
-        discountedPrice: null,
-        discountLabel: null,
-      },
-    } satisfies Record<BillingPeriod, PlanPrice>,
-    href: '#',
-    highlights: [
-      { description: 'Everything in Pro' },
-      { description: '400 automated applications / month' },
-      { description: 'Priority processing' },
-      { description: 'Priority support' },
-    ],
-    features: [
-      { section: 'Automation', name: 'Automated applications', value: '400 / month' },
-      { section: 'Automation', name: 'Automatic form completion', value: true },
-      { section: 'Automation', name: 'Application questions', value: true },
-      { section: 'Personalization', name: 'Career Profile', value: true },
-      { section: 'Personalization', name: 'Tailored resume', value: true },
-      { section: 'Personalization', name: 'Tailored cover letter', value: true },
-      { section: 'Personalization', name: 'Company and role context', value: true },
-      { section: 'Discovery & organization', name: 'Relevant job discovery', value: true },
-      { section: 'Discovery & organization', name: 'Eligibility checks', value: true },
-      { section: 'Discovery & organization', name: 'Application tracking', value: true },
-      { section: 'Processing', name: 'Standard processing', value: true },
-      { section: 'Processing', name: 'Priority processing', value: true },
-      { section: 'Processing', name: 'Priority support', value: true },
-    ],
-  },
-]
 
 function Header() {
   return (
@@ -213,15 +79,16 @@ function PricingCards({
   selectedTier: (typeof tiers)[number]
 }) {
   return (
-    <div className="relative py-24">
-      <Gradient className="absolute inset-x-2 top-48 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset" />
-      <Container className="relative">
+    <div className="py-24">
+      <Container>
         <BillingToggle billing={billing} tier={selectedTier} />
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {tiers.map((tier, tierIndex) => (
-            <PricingCard key={tierIndex} tier={tier} billing={billing} />
-          ))}
-        </div>
+        <Gradient className="overflow-hidden rounded-4xl p-4 ring-1 ring-black/5 ring-inset md:p-6 lg:p-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {tiers.map((tier, tierIndex) => (
+              <PricingCard key={tierIndex} tier={tier} billing={billing} />
+            ))}
+          </div>
+        </Gradient>
       </Container>
     </div>
   )
@@ -254,7 +121,7 @@ function PricingCard({
             </div>
           </div>
           <div className="mt-8">
-            <Button href={tier.href}>Start applying</Button>
+            <Button href={signupHref(tier, billing)}>Start applying</Button>
           </div>
           <div className="mt-8">
             <h3 className="text-sm/6 font-medium text-gray-950">
@@ -274,8 +141,10 @@ function PricingCard({
 
 function PricingTable({
   selectedTier,
+  billing,
 }: {
   selectedTier: (typeof tiers)[number]
+  billing: BillingPeriod
 }) {
   return (
     <Container className="py-24">
@@ -347,7 +216,7 @@ function PricingTable({
               </div>
             </td>
             <td colSpan={3} className="p-0 text-right">
-              <Button variant="outline" href={selectedTier.href}>
+              <Button variant="outline" href={signupHref(selectedTier, billing)}>
                 Start applying
               </Button>
             </td>
@@ -362,7 +231,7 @@ function PricingTable({
                 data-selected={selectedTier === tier ? true : undefined}
                 className="px-0 pt-4 pb-0 data-selected:table-cell max-sm:hidden"
               >
-                <Button variant="outline" href={tier.href}>
+                <Button variant="outline" href={signupHref(tier, billing)}>
                   Start applying
                 </Button>
               </td>
@@ -485,16 +354,16 @@ function FrequentlyAskedQuestions() {
               What counts as an application?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              An application is counted when JobApply successfully submits an
+              An application is counted when Easli successfully submits an
               application to an employer on your behalf.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Does JobApply send the same resume everywhere?
+              Does Easli send the same resume everywhere?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              No. JobApply uses your Career Profile and the requirements of
+              No. Easli uses your Career Profile and the requirements of
               each role to tailor the application using your real experience.
             </dd>
           </dl>
@@ -512,13 +381,13 @@ function FrequentlyAskedQuestions() {
               What happens when I reach my application limit?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              JobApply pauses new automated submissions until your allowance
+              Easli pauses new automated submissions until your allowance
               becomes available again or you move to a higher plan.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Does JobApply apply to every job it finds?
+              Does Easli apply to every job it finds?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
               No. Jobs are checked against your preferences, background, and
@@ -546,12 +415,8 @@ export default async function Pricing({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   let params = await searchParams
-  let tier =
-    typeof params.tier === 'string'
-      ? tiers.find(({ slug }) => slug === params.tier)!
-      : tiers[0]
-  let billing: BillingPeriod =
-    params.billing === 'threeMonth' ? 'threeMonth' : 'monthly'
+  let tier = resolvePlan(params.tier)
+  let billing = resolveBilling(params.billing)
 
   return (
     <main className="overflow-hidden">
@@ -561,7 +426,7 @@ export default async function Pricing({
       </Container>
       <Header />
       <PricingCards billing={billing} selectedTier={tier} />
-      <PricingTable selectedTier={tier} />
+      <PricingTable selectedTier={tier} billing={billing} />
       <FrequentlyAskedQuestions />
       <Footer />
     </main>

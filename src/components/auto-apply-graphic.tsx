@@ -48,8 +48,13 @@ const statusConfig: Record<
   },
 }
 
-const CYCLE_MS = 5000
-const PHASE_MS = 1400
+// One full row cycle (tailoring -> applying -> applied, then straight into
+// the next row) totals ~2.7s so a visitor can read the whole sequence in
+// the ~2.5-4s window without a dead gap between rows.
+const INITIAL_DELAY_MS = 1200
+const TAILORING_MS = 700
+const APPLYING_MS = 800
+const APPLIED_HOLD_MS = 1200
 
 function AutoApplyOnBadge({ animated }: { animated: boolean }) {
   return (
@@ -109,41 +114,38 @@ export function AutoApplyGraphic() {
   )
   const reducedMotion = useReducedMotion()
 
-  // Every cycle, advance whichever row is next in line through
-  // Tailoring → Applying… → Auto applied, then move on to the next row.
-  // The first cycle only fires after CYCLE_MS so the approved default
-  // snapshot stays put on initial paint.
+  // Advance whichever row is next in line through
+  // Tailoring → Applying… → Auto applied, then move straight into the next
+  // row with no dead gap in between. The very first step only fires after
+  // INITIAL_DELAY_MS so the approved default snapshot stays put on initial
+  // paint for a brief beat before the loop begins.
   useEffect(() => {
     if (reducedMotion) return
     let index = 0
-    const timeouts: ReturnType<typeof setTimeout>[] = []
+    let timeoutId: ReturnType<typeof setTimeout>
 
-    const runCycle = () => {
+    const runStep = () => {
       setRows((prev) =>
         prev.map((row, i) => (i === index ? { ...row, status: 'tailoring' } : row)),
       )
-      timeouts.push(
-        setTimeout(() => {
-          setRows((prev) =>
-            prev.map((row, i) => (i === index ? { ...row, status: 'applying' } : row)),
-          )
-        }, PHASE_MS),
-      )
-      timeouts.push(
-        setTimeout(() => {
+      timeoutId = setTimeout(() => {
+        setRows((prev) =>
+          prev.map((row, i) => (i === index ? { ...row, status: 'applying' } : row)),
+        )
+        timeoutId = setTimeout(() => {
           setRows((prev) =>
             prev.map((row, i) => (i === index ? { ...row, status: 'applied' } : row)),
           )
-          index = (index + 1) % initialRows.length
-        }, PHASE_MS * 2),
-      )
+          timeoutId = setTimeout(() => {
+            index = (index + 1) % initialRows.length
+            runStep()
+          }, APPLIED_HOLD_MS)
+        }, APPLYING_MS)
+      }, TAILORING_MS)
     }
 
-    const intervalId = setInterval(runCycle, CYCLE_MS)
-    return () => {
-      clearInterval(intervalId)
-      timeouts.forEach(clearTimeout)
-    }
+    timeoutId = setTimeout(runStep, INITIAL_DELAY_MS)
+    return () => clearTimeout(timeoutId)
   }, [reducedMotion])
 
   const animated = !reducedMotion
