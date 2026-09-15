@@ -1,8 +1,3 @@
-// LEGAL DRAFT — requires professional/legal review before production.
-// This is placeholder page architecture and conservative draft language
-// only. It does not claim any compliance certification and must not be
-// treated as final legal copy.
-
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { GradientBackground } from '@/components/gradient'
@@ -41,10 +36,12 @@ export default function Refund() {
       <Container className="mt-16">
         <Heading as="h1">Refund Policy</Heading>
         <Lead className="mt-6 max-w-3xl">
-          This page is a draft outline and has not yet been reviewed by legal
-          counsel. It is not final and should not be relied on as our
-          complete refund terms.
+          This Refund Policy explains how refunds work for Easli
+          subscriptions.
         </Lead>
+        <p className="mt-4 text-sm/6 text-gray-500">
+          Last updated: September 2026
+        </p>
         <div className="mx-auto mt-16 mb-32 max-w-2xl">
           <Section title="Payment processing">
             <p>
@@ -66,9 +63,10 @@ export default function Refund() {
           </Section>
           <Section title="Refund eligibility">
             <p>
-              Whether a payment is eligible for a refund can depend on
-              applicable law and on Paddle&rsquo;s buyer terms, since Paddle
-              is the merchant of record for your purchase.
+              Refunds are subject to Paddle&rsquo;s applicable buyer and
+              refund terms, as well as any mandatory consumer protection
+              law that applies to your purchase, since Paddle is the
+              merchant of record for your purchase.
             </p>
           </Section>
           <Section title="Contact">
