@@ -6,6 +6,17 @@ export const metadata: Metadata = {
     template: '%s | Easli',
     default: 'Easli',
   },
+  description:
+    'Easli finds relevant roles and tailors your CV and cover letter for each one, ready for you to review and submit.',
+  applicationName: 'Easli',
+  openGraph: {
+    type: 'website',
+    siteName: 'Easli',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary',
+  },
   icons: {
     icon: [
       { url: '/brand/favicon.svg', type: 'image/svg+xml' },

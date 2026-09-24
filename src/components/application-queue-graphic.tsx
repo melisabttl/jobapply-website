@@ -12,19 +12,19 @@ function CheckIcon({ className }: { className?: string }) {
   )
 }
 
-type RowStatus = 'tailoring' | 'applying' | 'applied'
+type RowStatus = 'tailoring' | 'preparing' | 'ready'
 
 type QueueRow = { role: string; status: RowStatus }
 
 // Snapshot mirrors the approved default mock exactly: three rows already
-// sent, one row mid-flight. Only the mid-flight row advances over time —
+// ready for review, one row mid-flight. Only the mid-flight row advances over time —
 // everything else is correct on first paint, no animation required to
 // understand the card.
 const initialRows: QueueRow[] = [
-  { role: 'Product Manager', status: 'applied' },
-  { role: 'Product Owner', status: 'applied' },
-  { role: 'Associate Product Manager', status: 'applying' },
-  { role: 'Founding Product Manager', status: 'applied' },
+  { role: 'Product Manager', status: 'ready' },
+  { role: 'Product Owner', status: 'ready' },
+  { role: 'Associate Product Manager', status: 'preparing' },
+  { role: 'Founding Product Manager', status: 'ready' },
 ]
 
 const statusConfig: Record<
@@ -36,27 +36,27 @@ const statusConfig: Record<
     application: 'Tailoring',
     badgeClass: 'bg-violet-600/10 text-violet-700',
   },
-  applying: {
-    label: 'Applying…',
+  preparing: {
+    label: 'Preparing…',
     application: 'Tailoring',
     badgeClass: 'bg-blue-600/10 text-blue-700',
   },
-  applied: {
-    label: 'Auto applied',
+  ready: {
+    label: 'Ready to review',
     application: 'Resume + Cover Letter',
     badgeClass: 'bg-emerald-600/10 text-emerald-700',
   },
 }
 
-// One full row cycle (tailoring -> applying -> applied, then straight into
+// One full row cycle (tailoring -> preparing -> ready, then straight into
 // the next row) totals ~2.7s so a visitor can read the whole sequence in
 // the ~2.5-4s window without a dead gap between rows.
 const INITIAL_DELAY_MS = 1200
 const TAILORING_MS = 700
-const APPLYING_MS = 800
-const APPLIED_HOLD_MS = 1200
+const PREPARING_MS = 800
+const READY_HOLD_MS = 1200
 
-function AutoApplyOnBadge({ animated }: { animated: boolean }) {
+function LiveBadge({ animated }: { animated: boolean }) {
   return (
     <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-emerald-600/10 px-2 py-0.5 text-xs font-semibold text-emerald-700">
       <motion.span
@@ -64,7 +64,7 @@ function AutoApplyOnBadge({ animated }: { animated: boolean }) {
         transition={{ duration: 1.6, repeat: animated ? Infinity : 0, ease: 'easeInOut' }}
         className="size-1.5 rounded-full bg-emerald-600"
       />
-      ON
+      Live
     </span>
   )
 }
@@ -78,8 +78,8 @@ function StatusBadge({ status, animated }: { status: RowStatus; animated: boolea
         config.badgeClass,
       )}
     >
-      {status === 'applied' && <CheckIcon className="size-3 fill-emerald-700" />}
-      {status === 'applying' && (
+      {status === 'ready' && <CheckIcon className="size-3 fill-emerald-700" />}
+      {status === 'preparing' && (
         <motion.span
           animate={animated ? { opacity: [1, 0.35, 1] } : { opacity: 1 }}
           transition={{ duration: 1, repeat: animated ? Infinity : 0, ease: 'easeInOut' }}
@@ -108,14 +108,14 @@ function QueueRowItem({ row, animated }: { row: QueueRow; animated: boolean }) {
   )
 }
 
-export function AutoApplyGraphic() {
+export function ApplicationQueueGraphic() {
   const [rows, setRows] = useState<QueueRow[]>(() =>
     initialRows.map((row) => ({ ...row })),
   )
   const reducedMotion = useReducedMotion()
 
   // Advance whichever row is next in line through
-  // Tailoring → Applying… → Auto applied, then move straight into the next
+  // Tailoring → Preparing… → Ready to review, then move straight into the next
   // row with no dead gap in between. The very first step only fires after
   // INITIAL_DELAY_MS so the approved default snapshot stays put on initial
   // paint for a brief beat before the loop begins.
@@ -130,17 +130,17 @@ export function AutoApplyGraphic() {
       )
       timeoutId = setTimeout(() => {
         setRows((prev) =>
-          prev.map((row, i) => (i === index ? { ...row, status: 'applying' } : row)),
+          prev.map((row, i) => (i === index ? { ...row, status: 'preparing' } : row)),
         )
         timeoutId = setTimeout(() => {
           setRows((prev) =>
-            prev.map((row, i) => (i === index ? { ...row, status: 'applied' } : row)),
+            prev.map((row, i) => (i === index ? { ...row, status: 'ready' } : row)),
           )
           timeoutId = setTimeout(() => {
             index = (index + 1) % initialRows.length
             runStep()
-          }, APPLIED_HOLD_MS)
-        }, APPLYING_MS)
+          }, READY_HOLD_MS)
+        }, PREPARING_MS)
       }, TAILORING_MS)
     }
 
@@ -157,11 +157,11 @@ export function AutoApplyGraphic() {
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-gray-950">Auto Apply</span>
-          <AutoApplyOnBadge animated={animated} />
+          <span className="text-sm font-semibold text-gray-950">Application queue</span>
+          <LiveBadge animated={animated} />
         </div>
         <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-gray-600">
-          200+ / day
+          You submit
         </span>
       </div>
       <div className="flex flex-col gap-2">

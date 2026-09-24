@@ -12,12 +12,12 @@ function CallToAction() {
       <hgroup>
         <Subheading>Get started</Subheading>
         <p className="mt-6 text-3xl font-medium tracking-tight text-gray-950 sm:text-5xl">
-          Ready to put your applications on autopilot?
+          Ready to make your job search easier?
         </p>
       </hgroup>
       <p className="mx-auto mt-6 max-w-md text-sm/6 text-gray-500">
-        Set up your career profile once. Easli finds relevant roles,
-        tailors each application, and applies for you.
+        Set up your Career Profile once. Easli finds relevant roles and
+        tailors your CV and cover letter, ready for you to review and submit.
       </p>
       <div className="mt-6">
         <Button className="w-full sm:w-auto" href={EASLI_APP_REGISTER_URL}>
@@ -115,7 +115,7 @@ export function Footer() {
                       />
                     </Link>
                     <p className="mt-4 text-sm/6 text-gray-500">
-                      Your job search, on autopilot.
+                      Your job search, organized.
                     </p>
                   </PlusGridItem>
                 </div>

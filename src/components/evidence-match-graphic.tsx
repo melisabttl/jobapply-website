@@ -14,9 +14,12 @@ const rows: { requirement: string; evidence: EvidenceType }[] = [
 ]
 
 const evidenceStyles: Record<EvidenceType, string> = {
-  Experience: 'bg-blue-600/10 text-blue-700',
-  Project: 'bg-purple-600/10 text-purple-700',
-  Skill: 'bg-emerald-600/10 text-emerald-700',
+  Experience:
+    'bg-blue-600/10 text-blue-700 group-data-dark:bg-blue-400/15 group-data-dark:text-blue-300',
+  Project:
+    'bg-purple-600/10 text-purple-700 group-data-dark:bg-purple-400/15 group-data-dark:text-purple-300',
+  Skill:
+    'bg-emerald-600/10 text-emerald-700 group-data-dark:bg-emerald-400/15 group-data-dark:text-emerald-300',
 }
 
 function Row({
@@ -37,9 +40,11 @@ function Row({
           transition: { duration: 0.6, delay, ease: 'easeInOut' },
         },
       }}
-      className="flex items-center justify-between gap-4 rounded-lg bg-white px-4 py-2.5 shadow-xs ring-1 ring-black/5"
+      className="flex items-center justify-between gap-4 rounded-lg bg-white px-4 py-2.5 shadow-xs ring-1 ring-black/5 group-data-dark:bg-white/5 group-data-dark:ring-white/10"
     >
-      <span className="text-sm text-gray-950">{requirement}</span>
+      <span className="text-sm text-gray-950 group-data-dark:text-white">
+        {requirement}
+      </span>
       <span
         className={clsx(
           'rounded-full px-2.5 py-0.5 text-xs font-medium whitespace-nowrap',
@@ -60,8 +65,8 @@ export function EvidenceMatchGraphic() {
     >
       <div className="mb-1 flex items-center gap-2">
         <span className="size-1.5 rounded-full bg-emerald-500" />
-        <span className="text-xs font-medium text-gray-600">
-          Evidence Match — Strong
+        <span className="text-xs font-medium text-gray-600 group-data-dark:text-gray-400">
+          Evidence match — High
         </span>
       </div>
       {rows.map((row, i) => (

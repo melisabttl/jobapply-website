@@ -218,7 +218,7 @@ function CareerProfileUpdated({ pulseKey }: { pulseKey: number }) {
         Career Profile updated
       </motion.div>
       <p className="text-[9px] whitespace-nowrap text-gray-400">
-        Experience Β· Projects Β· Skills Β· Evidence
+        Experience · Projects · Skills · Evidence
       </p>
     </div>
   )
@@ -229,7 +229,7 @@ export function AddBackgroundGraphic() {
   const [pulseKey, setPulseKey] = useState(0)
   const reducedMotion = useReducedMotion()
 
-  // Ambient cycle only β€” every source is already visible; this just moves
+  // Ambient cycle only — every source is already visible; this just moves
   // a soft "in progress" highlight across one item at a time.
   useEffect(() => {
     if (reducedMotion) return

@@ -7,19 +7,17 @@ type QA = { question: string; answer: string }
 
 const items: QA[] = [
   {
+    question: 'What is your notice period?',
+    answer: 'One month.',
+  },
+  {
+    question: 'Do you require visa sponsorship?',
+    answer: 'No, I am authorized to work without sponsorship.',
+  },
+  {
     question: 'Describe your B2B SaaS experience.',
     answer:
       'Led product discovery and shipped core workflows for a B2B SaaS platform used across sales and support teams.',
-  },
-  {
-    question: 'Why do you want to work here?',
-    answer:
-      'Your focus on evidence-based hiring lines up directly with how I approach product decisions.',
-  },
-  {
-    question: 'Tell us about a relevant project.',
-    answer:
-      'Built and launched a workflow automation tool that cut manual review time for the team.',
   },
 ]
 

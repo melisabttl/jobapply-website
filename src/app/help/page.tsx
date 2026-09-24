@@ -19,8 +19,8 @@ function Header() {
         Your questions answered.
       </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Common questions about how Easli finds, tailors, and submits your
-        applications.
+        Common questions about how Easli finds roles and helps you prepare
+        your applications.
       </Lead>
     </Container>
   )
@@ -32,12 +32,12 @@ function HelpTopics() {
       <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
         <dl>
           <dt className="text-sm font-semibold">
-            How does Easli choose which jobs to apply to?
+            How does Easli choose which jobs to show me?
           </dt>
           <dd className="mt-4 text-sm/6 text-gray-600">
             Easli matches open roles against your Career Profile,
             preferences, and eligibility. Only roles that clear those checks
-            move into the application workflow.
+            are recommended to you.
           </dd>
         </dl>
         <dl>
@@ -52,20 +52,21 @@ function HelpTopics() {
         </dl>
         <dl>
           <dt className="text-sm font-semibold">
-            What counts as an application?
+            Does Easli submit applications for me?
           </dt>
           <dd className="mt-4 text-sm/6 text-gray-600">
-            An application is counted when Easli successfully submits an
-            application to an employer on your behalf.
+            No. Easli prepares a tailored CV and cover letter for each role
+            and fills in supported application forms. Filling in a form does
+            not send it. You review everything and submit the final
+            application to the employer yourself.
           </dd>
         </dl>
         <dl>
-          <dt className="text-sm font-semibold">Can I change my plan?</dt>
+          <dt className="text-sm font-semibold">How much does Easli cost?</dt>
           <dd className="mt-4 text-sm/6 text-gray-600">
-            Yes. You can move between plans at any time from your account.
-            See{' '}
+            Easli Pro is $19 USD per month. See{' '}
             <Link href="/pricing" className="font-medium hover:text-gray-600">
-              plans and pricing
+              pricing
             </Link>
             .
           </dd>
@@ -81,21 +82,11 @@ function HelpTopics() {
         </dl>
         <dl>
           <dt className="text-sm font-semibold">
-            How do application limits work?
-          </dt>
-          <dd className="mt-4 text-sm/6 text-gray-600">
-            Each plan includes a monthly automated application allowance.
-            Easli pauses new submissions once you reach it, until your
-            allowance renews or you move to a higher plan.
-          </dd>
-        </dl>
-        <dl>
-          <dt className="text-sm font-semibold">
             Where can I see my applications?
           </dt>
           <dd className="mt-4 text-sm/6 text-gray-600">
-            Every application Easli submits is tracked in one place, from
-            submitted to interview.
+            Your applications are tracked in one place in your Easli account,
+            from preparation to interview.
           </dd>
         </dl>
         <dl>

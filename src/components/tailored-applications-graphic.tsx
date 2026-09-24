@@ -11,7 +11,7 @@ function CheckIcon({ className }: { className?: string }) {
   )
 }
 
-// Temporary placeholder avatar β€” easy to swap for a real photo/mark later.
+// Temporary placeholder avatar — easy to swap for a real photo/mark later.
 function Avatar() {
   return (
     <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-linear-115 from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] text-sm font-semibold text-white shadow-sm ring-1 ring-black/5 sm:size-14 sm:bg-linear-145">
@@ -20,7 +20,7 @@ function Avatar() {
   )
 }
 
-function AutoAppliedPill({ active }: { active: boolean }) {
+function TailoredPill({ active }: { active: boolean }) {
   return (
     <motion.span
       animate={
@@ -37,7 +37,7 @@ function AutoAppliedPill({ active }: { active: boolean }) {
       className="flex shrink-0 items-center gap-1 rounded-full bg-emerald-600/10 px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-emerald-700"
     >
       <CheckIcon className="size-3 fill-emerald-700" />
-      Auto applied
+      Tailored
     </motion.span>
   )
 }
@@ -78,11 +78,11 @@ export function TailoredApplicationsGraphic() {
       className="relative flex size-full flex-col overflow-hidden bg-white"
     >
       {/* Warm gradient wash confined to the header, fading to white before
-          the divider β€” same treatment as Radiant's own gradient, just
+          the divider — same treatment as Radiant's own gradient, just
           restricted to this region instead of a full hero-strength wash. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-1/2 bg-linear-115 from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
 
-      {/* Candidate identity β€” proportions measured from Radiant's original
+      {/* Candidate identity — proportions measured from Radiant's original
           profile-header screenshot (avatar ~56px, ~40px/32px left/top
           padding, ~24px gap to name). */}
       <div className="relative z-10 flex items-start justify-between gap-3 px-6 pt-6 sm:px-10 sm:pt-7">
@@ -97,14 +97,14 @@ export function TailoredApplicationsGraphic() {
             </p>
           </div>
         </div>
-        <AutoAppliedPill active={active} />
+        <TailoredPill active={active} />
       </div>
 
       {/* Divider sits at roughly the same vertical position as Radiant's
           original tab-row divider. */}
       <div className="relative z-10 mx-6 mt-5 border-t border-gray-100 sm:mx-10 sm:mt-7" />
 
-      {/* Tailored Resume + Tailored Cover Letter on one clean surface β€”
+      {/* Tailored Resume + Tailored Cover Letter on one clean surface —
           no nested card frame, just a subtle divide-x between columns.
           Headings are the strong element here; body copy stays lighter
           and more spaced out so it reads as calm, real preview content
@@ -119,8 +119,8 @@ export function TailoredApplicationsGraphic() {
             <p>Product Manager</p>
             <div className="mt-2.5 flex flex-col gap-0.5">
               <p className="font-semibold text-gray-500">Experience</p>
-              <p>Northstar β€” Associate Product Manager</p>
-              <p>Brightpath β€” Product Operations Intern</p>
+              <p>Northstar — Associate Product Manager</p>
+              <p>Brightpath — Product Operations Intern</p>
             </div>
             <div className="mt-2.5 hidden flex-col gap-0.5 sm:flex">
               <p className="font-semibold text-gray-500">Project</p>
@@ -128,7 +128,7 @@ export function TailoredApplicationsGraphic() {
             </div>
             <div className="mt-2.5 hidden flex-col gap-0.5 sm:flex">
               <p className="font-semibold text-gray-500">Skills</p>
-              <p>User research Β· Roadmapping Β· SaaS</p>
+              <p>User research · Roadmapping · SaaS</p>
             </div>
           </div>
         </div>
