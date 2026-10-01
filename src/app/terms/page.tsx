@@ -114,9 +114,9 @@ export default function Terms() {
                 pricing page
               </Link>
               , and refunds are covered by our{' '}
-              <Link href="/refund" className="font-medium hover:text-gray-600">
+              <a href="/refund" className="font-medium hover:text-gray-600">
                 refund policy
-              </Link>
+              </a>
               .
             </p>
           </Section>
@@ -140,9 +140,9 @@ export default function Terms() {
           <Section title="Contact">
             <p>
               Questions about these terms can be sent through our{' '}
-              <Link href="/contact" className="font-medium hover:text-gray-600">
+              <a href="/contact" className="font-medium hover:text-gray-600">
                 contact page
-              </Link>
+              </a>
               .
             </p>
           </Section>

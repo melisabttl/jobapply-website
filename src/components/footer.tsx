@@ -1,3 +1,4 @@
+import * as Headless from '@headlessui/react'
 import { PlusGrid, PlusGridItem, PlusGridRow } from '@/components/plus-grid'
 import { EASLI_APP_LOGIN_URL, EASLI_APP_REGISTER_URL } from '@/lib/auth'
 import { Button } from './button'
@@ -47,6 +48,31 @@ function SitemapLink(props: React.ComponentPropsWithoutRef<typeof Link>) {
   )
 }
 
+// Legal links use a plain anchor instead of next/link: these are the
+// policy pages providers and payment processors require as stable, directly
+// loadable URLs, so they always get a full document navigation rather than
+// a client-side RSC transition.
+function SitemapHardLink({
+  href,
+  children,
+}: {
+  href: string
+  children: React.ReactNode
+}) {
+  return (
+    <li>
+      <Headless.DataInteractive>
+        <a
+          href={href}
+          className="font-medium text-gray-950 data-hover:text-gray-950/75"
+        >
+          {children}
+        </a>
+      </Headless.DataInteractive>
+    </li>
+  )
+}
+
 function Sitemap() {
   return (
     <>
@@ -74,9 +100,9 @@ function Sitemap() {
       <div>
         <SitemapHeading>Legal</SitemapHeading>
         <SitemapLinks>
-          <SitemapLink href="/privacy">Privacy policy</SitemapLink>
-          <SitemapLink href="/terms">Terms of service</SitemapLink>
-          <SitemapLink href="/refund">Refund policy</SitemapLink>
+          <SitemapHardLink href="/privacy">Privacy policy</SitemapHardLink>
+          <SitemapHardLink href="/terms">Terms of service</SitemapHardLink>
+          <SitemapHardLink href="/refund">Refund policy</SitemapHardLink>
         </SitemapLinks>
       </div>
     </>

@@ -1,7 +1,6 @@
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { GradientBackground } from '@/components/gradient'
-import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead } from '@/components/text'
 import type { Metadata } from 'next'
@@ -65,18 +64,18 @@ export default function Refund() {
               You can cancel at any time to stop future renewal charges. To
               cancel, use the subscription management link in your billing
               emails from Paddle, or contact us through our{' '}
-              <Link href="/contact" className="font-medium hover:text-gray-600">
+              <a href="/contact" className="font-medium hover:text-gray-600">
                 contact page
-              </Link>
+              </a>
               .
             </p>
           </Section>
           <Section title="Requesting a refund">
             <p>
               To request a refund, contact us through our{' '}
-              <Link href="/contact" className="font-medium hover:text-gray-600">
+              <a href="/contact" className="font-medium hover:text-gray-600">
                 contact page
-              </Link>{' '}
+              </a>{' '}
               and choose &ldquo;Refund request&rdquo;. Include the email address
               you used at checkout so we can find your purchase. You can also
               contact Paddle about your purchase at{' '}
@@ -105,9 +104,9 @@ export default function Refund() {
           <Section title="Contact">
             <p>
               Questions about this policy can be sent through our{' '}
-              <Link href="/contact" className="font-medium hover:text-gray-600">
+              <a href="/contact" className="font-medium hover:text-gray-600">
                 contact page
-              </Link>
+              </a>
               .
             </p>
           </Section>

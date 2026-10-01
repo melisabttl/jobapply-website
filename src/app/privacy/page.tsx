@@ -1,7 +1,6 @@
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { GradientBackground } from '@/components/gradient'
-import { Link } from '@/components/link'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead } from '@/components/text'
 import type { Metadata } from 'next'
@@ -158,9 +157,9 @@ export default function Privacy() {
           <Section title="Contact">
             <p>
               Questions about this policy can be sent through our{' '}
-              <Link href="/contact" className="font-medium hover:text-gray-600">
+              <a href="/contact" className="font-medium hover:text-gray-600">
                 contact page
-              </Link>
+              </a>
               .
             </p>
           </Section>
