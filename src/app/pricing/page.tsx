@@ -5,7 +5,7 @@ import { Gradient, GradientBackground } from '@/components/gradient'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
 import { registerUrlForPlan } from '@/lib/auth'
-import { plans, planPrice, type Plan } from '@/lib/pricing'
+import { plans, planPrice, type Plan, type PlanId } from '@/lib/pricing'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import type { Metadata } from 'next'
 
@@ -33,12 +33,20 @@ function Header() {
   )
 }
 
+// Presentation-only — not part of the pricing data model. Free has no
+// "best for" line.
+const BEST_FOR: Partial<Record<PlanId, string>> = {
+  starter: 'A focused job search',
+  pro: 'An active job search',
+  max: 'A high-volume search',
+}
+
 function PricingCards() {
   return (
     <div className="py-24">
       <Container>
         <Gradient className="overflow-hidden rounded-4xl p-4 ring-1 ring-black/5 ring-inset md:p-6 lg:p-8">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
             {plans.map((plan) => (
               <PricingCard key={plan.id} plan={plan} />
             ))}
@@ -51,9 +59,9 @@ function PricingCards() {
 
 function CardFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
-      <div className="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
-        <div className="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
+    <div className="-m-2 grid h-full grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
+      <div className="grid h-full grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
+        <div className="h-full rounded-3xl bg-white p-8 shadow-2xl ring-1 ring-black/5">
           {children}
         </div>
       </div>
@@ -63,92 +71,71 @@ function CardFrame({ children }: { children: React.ReactNode }) {
 
 function PricingCard({ plan }: { plan: Plan }) {
   const price = planPrice(plan)
+  const bestFor = BEST_FOR[plan.id]
 
   return (
     <CardFrame>
-      <Subheading>{plan.name}</Subheading>
-      <p className="mt-2 text-sm/6 text-gray-950/75">{plan.description}</p>
-      <div className="mt-8 flex items-center gap-4">
-        {price.hasDiscount && (
-          <div className="text-2xl font-medium text-gray-950/40 line-through">
-            ${price.regularAmount}
+      <div className="flex h-full flex-col">
+        <div>
+          <Subheading>{plan.name}</Subheading>
+          <p className="mt-2 text-sm/6 text-gray-950/75">
+            {plan.description}
+          </p>
+        </div>
+
+        <div className="mt-6 flex items-center gap-4">
+          {price.hasDiscount && (
+            <div className="text-2xl font-medium text-gray-950/40 line-through">
+              ${price.regularAmount}
+            </div>
+          )}
+          <div className="text-5xl font-medium text-gray-950">
+            ${price.amount}
           </div>
+          {plan.billingPeriod !== 'lifetime' && (
+            <div className="text-sm/5 text-gray-950/75">
+              <p>USD</p>
+              <p>{price.billingSuffix}</p>
+            </div>
+          )}
+        </div>
+        {price.discountLabel && (
+          <p className="mt-2 inline-flex items-center self-start rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
+            {price.discountLabel}
+          </p>
         )}
-        <div className="text-5xl font-medium text-gray-950">
-          ${price.amount}
+
+        <div className="mt-6">
+          <p className="text-sm/6 font-medium text-gray-950">
+            {plan.applicationLimit.toLocaleString()} complete AI applications
+          </p>
+          <p className="text-sm/6 text-gray-950/60">
+            {plan.billingPeriod === 'lifetime'
+              ? 'Lifetime'
+              : 'Per billing period'}
+          </p>
         </div>
-        <div className="text-sm/5 text-gray-950/75">
-          <p>USD</p>
-          <p>{price.billingSuffix}</p>
+
+        <div className="mt-auto pt-8">
+          <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
+          {/* Always rendered, hidden when absent, so every card reserves
+              the same height and the buttons above stay aligned. */}
+          <p
+            className={`mt-4 text-xs/5 text-gray-950/50 ${bestFor ? '' : 'invisible'}`}
+          >
+            <span className="font-medium text-gray-950/70">Best for</span>{' '}
+            {bestFor ?? 'placeholder'}
+          </p>
         </div>
-      </div>
-      {price.discountLabel && (
-        <p className="mt-2 inline-flex items-center rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
-          {price.discountLabel}
-        </p>
-      )}
-      <p className="mt-6 text-sm/6 font-medium text-gray-950">
-        {plan.applicationLimit.toLocaleString()} complete AI applications
-      </p>
-      <p className="text-sm/6 text-gray-950/60">
-        {plan.billingPeriod === 'lifetime' ? 'Lifetime' : 'Per billing period'}
-      </p>
-      <div className="mt-8">
-        <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
-      </div>
-      <div className="mt-8">
-        <h3 className="text-sm/6 font-medium text-gray-950">
-          What&rsquo;s included:
-        </h3>
-        <ul className="mt-3 space-y-3">
-          {plan.highlights.map((props, featureIndex) => (
-            <FeatureItem key={featureIndex} {...props} />
-          ))}
-        </ul>
       </div>
     </CardFrame>
-  )
-}
-
-function FeatureItem({
-  description,
-  disabled = false,
-}: {
-  description: string
-  disabled?: boolean
-}) {
-  return (
-    <li
-      data-disabled={disabled ? true : undefined}
-      className="flex items-start gap-4 text-sm/6 text-gray-950/75 data-disabled:text-gray-950/25"
-    >
-      <span className="inline-flex h-6 items-center">
-        <PlusIcon className="size-3.75 shrink-0 fill-gray-950/25" />
-      </span>
-      {disabled && <span className="sr-only">Not included:</span>}
-      {description}
-    </li>
-  )
-}
-
-function PlusIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 15 15" aria-hidden="true" {...props}>
-      <path clipRule="evenodd" d="M8 0H7v7H0v1h7v7h1V8h7V7H8V0z" />
-    </svg>
   )
 }
 
 // All plans share the same core feature set — the application allowance
 // shown on each card above is what actually differs between them.
 function IncludedFeatures() {
-  let sections = [
-    ...new Set(
-      plans[0].features
-        .filter((feature) => feature.section !== 'Allowance')
-        .map(({ section }) => section),
-    ),
-  ]
+  const highlights = plans[0].highlights
 
   return (
     <Container className="pb-24">
@@ -156,28 +143,17 @@ function IncludedFeatures() {
       <Heading as="div" className="mt-2 text-center">
         The application allowance is what changes.
       </Heading>
-      <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-3">
-        {sections.map((section) => (
-          <div key={section}>
-            <h3 className="text-sm/6 font-semibold text-gray-950">
-              {section}
-            </h3>
-            <ul className="mt-4 space-y-3">
-              {plans[0].features
-                .filter((feature) => feature.section === section)
-                .map(({ name }) => (
-                  <li
-                    key={name}
-                    className="flex items-center gap-3 text-sm/6 text-gray-600"
-                  >
-                    <CheckIcon className="size-4 shrink-0 fill-green-600" />
-                    {name}
-                  </li>
-                ))}
-            </ul>
-          </div>
+      <ul className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+        {highlights.map(({ description }) => (
+          <li
+            key={description}
+            className="flex items-center gap-3 text-sm/6 text-gray-600"
+          >
+            <CheckIcon className="size-4 shrink-0 fill-green-600" />
+            {description}
+          </li>
         ))}
-      </div>
+      </ul>
     </Container>
   )
 }
