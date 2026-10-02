@@ -2,410 +2,179 @@ import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient, GradientBackground } from '@/components/gradient'
-import { Link } from '@/components/link'
-import { LogoCloud } from '@/components/logo-cloud'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import {
-  CheckIcon,
-  ChevronUpDownIcon,
-  MinusIcon,
-} from '@heroicons/react/16/solid'
+import { registerUrlForPlan } from '@/lib/auth'
+import { plans, planPrice, type Plan, type PlanId } from '@/lib/pricing'
+import { CheckIcon } from '@heroicons/react/16/solid'
+import { clsx } from 'clsx'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Companies all over the world have closed millions of deals with Radiant. Sign up today and start selling smarter.',
+    'Easli plans are built around complete AI applications: start free, then upgrade to Starter, Pro, or Max as your job search picks up.',
 }
-
-const tiers = [
-  {
-    name: 'Starter' as const,
-    slug: 'starter',
-    description: 'Everything you need to start selling.',
-    priceMonthly: 99,
-    href: '#',
-    highlights: [
-      { description: 'Up to 3 team members' },
-      { description: 'Up to 5 deal progress boards' },
-      { description: 'Source leads from select platforms' },
-      { description: 'RadiantAI integrations', disabled: true },
-      { description: 'Competitor analysis', disabled: true },
-    ],
-    features: [
-      { section: 'Features', name: 'Accounts', value: 3 },
-      { section: 'Features', name: 'Deal progress boards', value: 5 },
-      { section: 'Features', name: 'Sourcing platforms', value: 'Select' },
-      { section: 'Features', name: 'Contacts', value: 100 },
-      { section: 'Features', name: 'AI assisted outreach', value: false },
-      { section: 'Analysis', name: 'Competitor analysis', value: false },
-      { section: 'Analysis', name: 'Dashboard reporting', value: false },
-      { section: 'Analysis', name: 'Community insights', value: false },
-      { section: 'Analysis', name: 'Performance analysis', value: false },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: false },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
-    ],
-  },
-  {
-    name: 'Growth' as const,
-    slug: 'growth',
-    description: 'All the extras for your growing team.',
-    priceMonthly: 149,
-    href: '#',
-    highlights: [
-      { description: 'Up to 10 team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 50 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: '5 competitor analyses per month' },
-    ],
-    features: [
-      { section: 'Features', name: 'Accounts', value: 10 },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 1000 },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: '5 / month' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
-    ],
-  },
-  {
-    name: 'Enterprise' as const,
-    slug: 'enterprise',
-    description: 'Added flexibility to close deals at scale.',
-    priceMonthly: 299,
-    href: '#',
-    highlights: [
-      { description: 'Unlimited active team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 100 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: 'Unlimited competitor analyses' },
-    ],
-    features: [
-      { section: 'Features', name: 'Accounts', value: 'Unlimited' },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 'Unlimited' },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: 'Unlimited' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
-      { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: true },
-    ],
-  },
-]
 
 function Header() {
   return (
     <Container className="mt-16">
-      <Heading as="h1">Pricing that grows with your team size.</Heading>
+      <Subheading>Pricing</Subheading>
+      <Heading as="h1" className="mt-2">
+        Plans for every stage of your job search.
+      </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Companies all over the world have closed millions of deals with Radiant.
-        Sign up today and start selling smarter.
+        Easli finds relevant roles, evaluates them against your Career
+        Profile, and prepares a tailored CV and cover letter for each one. You
+        review everything and submit the final application yourself. Every
+        plan is priced around complete AI applications — how many roles Easli
+        fully prepares for you.
       </Lead>
     </Container>
   )
 }
 
+// Presentation-only — not part of the pricing data model. Free has no
+// "best for" line.
+const BEST_FOR: Partial<Record<PlanId, string>> = {
+  starter: 'A focused job search',
+  pro: 'An active job search',
+  max: 'A high-volume search',
+}
+
+// The one plan given visual emphasis on the pricing grid.
+const RECOMMENDED_PLAN_ID: PlanId = 'starter'
+
 function PricingCards() {
   return (
-    <div className="relative py-24">
-      <Gradient className="absolute inset-x-2 top-48 bottom-0 rounded-4xl ring-1 ring-black/5 ring-inset" />
-      <Container className="relative">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {tiers.map((tier, tierIndex) => (
-            <PricingCard key={tierIndex} tier={tier} />
-          ))}
-        </div>
-        <LogoCloud className="mt-24" />
+    <div className="py-24">
+      <Container>
+        <Gradient className="overflow-hidden rounded-4xl p-4 ring-1 ring-black/5 ring-inset md:p-6 lg:p-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-4">
+            {plans.map((plan) => (
+              <PricingCard key={plan.id} plan={plan} />
+            ))}
+          </div>
+        </Gradient>
       </Container>
     </div>
   )
 }
 
-function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
+function CardFrame({
+  children,
+  featured = false,
+}: {
+  children: React.ReactNode
+  featured?: boolean
+}) {
   return (
-    <div className="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md">
-      <div className="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
-        <div className="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
-          <Subheading>{tier.name}</Subheading>
-          <p className="mt-2 text-sm/6 text-gray-950/75">{tier.description}</p>
-          <div className="mt-8 flex items-center gap-4">
-            <div className="text-5xl font-medium text-gray-950">
-              ${tier.priceMonthly}
-            </div>
-            <div className="text-sm/5 text-gray-950/75">
-              <p>USD</p>
-              <p>per month</p>
-            </div>
-          </div>
-          <div className="mt-8">
-            <Button href={tier.href}>Start a free trial</Button>
-          </div>
-          <div className="mt-8">
-            <h3 className="text-sm/6 font-medium text-gray-950">
-              Start selling with:
-            </h3>
-            <ul className="mt-3 space-y-3">
-              {tier.highlights.map((props, featureIndex) => (
-                <FeatureItem key={featureIndex} {...props} />
-              ))}
-            </ul>
-          </div>
+    <div className="-m-2 flex flex-col rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
+      <div className="flex flex-1 flex-col rounded-4xl p-2 shadow-md shadow-black/5">
+        <div
+          className={clsx(
+            'flex flex-1 flex-col rounded-3xl bg-white p-8 shadow-2xl',
+            featured ? 'ring-2 ring-gray-950' : 'ring-1 ring-black/5',
+          )}
+        >
+          {children}
         </div>
       </div>
     </div>
   )
 }
 
-function PricingTable({
-  selectedTier,
-}: {
-  selectedTier: (typeof tiers)[number]
-}) {
-  return (
-    <Container className="py-24">
-      <table className="w-full text-left">
-        <caption className="sr-only">Pricing plan comparison</caption>
-        <colgroup>
-          <col className="w-3/5 sm:w-2/5" />
-          <col
-            data-selected={selectedTier === tiers[0] ? true : undefined}
-            className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[1] ? true : undefined}
-            className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
-          />
-          <col
-            data-selected={selectedTier === tiers[2] ? true : undefined}
-            className="w-2/5 data-selected:table-column max-sm:hidden sm:w-1/5"
-          />
-        </colgroup>
-        <thead>
-          <tr className="max-sm:hidden">
-            <td className="p-0" />
-            {tiers.map((tier) => (
-              <th
-                key={tier.slug}
-                scope="col"
-                data-selected={selectedTier === tier ? true : undefined}
-                className="p-0 data-selected:table-cell max-sm:hidden"
-              >
-                <Subheading as="div">{tier.name}</Subheading>
-              </th>
-            ))}
-          </tr>
-          <tr className="sm:hidden">
-            <td className="p-0">
-              <div className="relative inline-block">
-                <div>
-                  <Menu>
-                    <MenuButton className="flex items-center justify-between gap-2 font-medium">
-                      {selectedTier.name}
-                      <ChevronUpDownIcon className="size-4 fill-gray-900" />
-                    </MenuButton>
-                    <MenuItems
-                      anchor="bottom start"
-                      className="min-w-(--button-width) rounded-lg bg-white p-1 shadow-lg ring-1 ring-gray-200 [--anchor-gap:6px] [--anchor-offset:-4px] [--anchor-padding:10px]"
-                    >
-                      {tiers.map((tier) => (
-                        <MenuItem key={tier.slug}>
-                          <Link
-                            scroll={false}
-                            href={`/pricing?tier=${tier.slug}`}
-                            data-selected={
-                              tier === selectedTier ? true : undefined
-                            }
-                            className="group flex items-center gap-2 rounded-md px-2 py-1 data-focus:bg-gray-200"
-                          >
-                            {tier.name}
-                            <CheckIcon className="hidden size-4 group-data-selected:block" />
-                          </Link>
-                        </MenuItem>
-                      ))}
-                    </MenuItems>
-                  </Menu>
-                </div>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                  <ChevronUpDownIcon className="size-4 fill-gray-900" />
-                </div>
-              </div>
-            </td>
-            <td colSpan={3} className="p-0 text-right">
-              <Button variant="outline" href={selectedTier.href}>
-                Get started
-              </Button>
-            </td>
-          </tr>
-          <tr className="max-sm:hidden">
-            <th className="p-0" scope="row">
-              <span className="sr-only">Get started</span>
-            </th>
-            {tiers.map((tier) => (
-              <td
-                key={tier.slug}
-                data-selected={selectedTier === tier ? true : undefined}
-                className="px-0 pt-4 pb-0 data-selected:table-cell max-sm:hidden"
-              >
-                <Button variant="outline" href={tier.href}>
-                  Get started
-                </Button>
-              </td>
-            ))}
-          </tr>
-        </thead>
-        {[...new Set(tiers[0].features.map(({ section }) => section))].map(
-          (section) => (
-            <tbody key={section} className="group">
-              <tr>
-                <th
-                  scope="colgroup"
-                  colSpan={4}
-                  className="px-0 pt-10 pb-0 group-first-of-type:pt-5"
-                >
-                  <div className="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold">
-                    {section}
-                  </div>
-                </th>
-              </tr>
-              {tiers[0].features
-                .filter((feature) => feature.section === section)
-                .map(({ name }) => (
-                  <tr
-                    key={name}
-                    className="border-b border-gray-100 last:border-none"
-                  >
-                    <th
-                      scope="row"
-                      className="px-0 py-4 text-sm/6 font-normal text-gray-600"
-                    >
-                      {name}
-                    </th>
-                    {tiers.map((tier) => {
-                      let value = tier.features.find(
-                        (feature) =>
-                          feature.section === section && feature.name === name,
-                      )?.value
+function PricingCard({ plan }: { plan: Plan }) {
+  const price = planPrice(plan)
+  const bestFor = BEST_FOR[plan.id]
+  const featured = plan.id === RECOMMENDED_PLAN_ID
 
-                      return (
-                        <td
-                          key={tier.slug}
-                          data-selected={
-                            selectedTier === tier ? true : undefined
-                          }
-                          className="p-4 data-selected:table-cell max-sm:hidden"
-                        >
-                          {value === true ? (
-                            <>
-                              <CheckIcon className="size-4 fill-green-600" />
-                              <span className="sr-only">
-                                Included in {tier.name}
-                              </span>
-                            </>
-                          ) : value === false || value === undefined ? (
-                            <>
-                              <MinusIcon className="size-4 fill-gray-400" />
-                              <span className="sr-only">
-                                Not included in {tier.name}
-                              </span>
-                            </>
-                          ) : (
-                            <div className="text-sm/6">{value}</div>
-                          )}
-                        </td>
-                      )
-                    })}
-                  </tr>
-                ))}
-            </tbody>
-          ),
+  return (
+    <CardFrame featured={featured}>
+      <div>
+        {/* Always rendered, hidden when not the recommended plan, so
+            every card's name starts at the same height. */}
+        <span
+          className={clsx(
+            'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium',
+            featured ? 'bg-gray-950 text-white' : 'invisible',
+          )}
+        >
+          Recommended
+        </span>
+        <Subheading className="mt-4">{plan.name}</Subheading>
+        <p className="mt-2 text-sm/6 text-gray-950/75">{plan.description}</p>
+      </div>
+
+      <div className="mt-6 flex items-center gap-4">
+        {price.hasDiscount && (
+          <div className="text-2xl font-medium text-gray-950/40 line-through">
+            ${price.regularAmount}
+          </div>
         )}
-      </table>
-    </Container>
-  )
-}
-
-function FeatureItem({
-  description,
-  disabled = false,
-}: {
-  description: string
-  disabled?: boolean
-}) {
-  return (
-    <li
-      data-disabled={disabled ? true : undefined}
-      className="flex items-start gap-4 text-sm/6 text-gray-950/75 data-disabled:text-gray-950/25"
-    >
-      <span className="inline-flex h-6 items-center">
-        <PlusIcon className="size-3.75 shrink-0 fill-gray-950/25" />
-      </span>
-      {disabled && <span className="sr-only">Not included:</span>}
-      {description}
-    </li>
-  )
-}
-
-function PlusIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 15 15" aria-hidden="true" {...props}>
-      <path clipRule="evenodd" d="M8 0H7v7H0v1h7v7h1V8h7V7H8V0z" />
-    </svg>
-  )
-}
-
-function Testimonial() {
-  return (
-    <div className="mx-2 my-24 rounded-4xl bg-gray-900 bg-[url(/dot-texture.svg)] pt-72 pb-24 lg:pt-36">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-[384px_1fr_1fr]">
-          <div className="-mt-96 lg:-mt-52">
-            <div className="-m-2 rounded-4xl bg-white/15 shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:max-w-xs">
-              <div className="rounded-4xl p-2 shadow-md shadow-black/5">
-                <div className="overflow-hidden rounded-3xl shadow-2xl outline outline-1 -outline-offset-1 outline-black/10">
-                  <img
-                    alt=""
-                    src="/testimonials/tina-yards.jpg"
-                    className="aspect-3/4 w-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="flex max-lg:mt-16 lg:col-span-2 lg:px-16">
-            <figure className="mx-auto flex max-w-xl flex-col gap-16 max-lg:text-center">
-              <blockquote>
-                <p className="relative text-3xl tracking-tight text-white before:absolute before:-translate-x-full before:content-['“'] after:absolute after:content-['”'] lg:text-4xl">
-                  Thanks to Radiant, we&apos;re finding new leads that we never
-                  would have found with legal methods.
-                </p>
-              </blockquote>
-              <figcaption className="mt-auto">
-                <p className="text-sm/6 font-medium text-white">Tina Yards</p>
-                <p className="text-sm/6 font-medium">
-                  <span className="bg-linear-to-r from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] bg-clip-text text-transparent">
-                    VP of Sales, Protocol
-                  </span>
-                </p>
-              </figcaption>
-            </figure>
-          </div>
+        <div className="text-5xl font-medium text-gray-950">
+          ${price.amount}
         </div>
-      </Container>
-    </div>
+        {plan.billingPeriod !== 'lifetime' && (
+          <div className="text-sm/5 text-gray-950/75">
+            <p>USD</p>
+            <p>{price.billingSuffix}</p>
+          </div>
+        )}
+      </div>
+      {price.discountLabel && (
+        <p className="mt-2 inline-flex items-center self-start rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
+          {price.discountLabel}
+        </p>
+      )}
+
+      <div className="mt-6">
+        <p className="text-sm/6 font-medium text-gray-950">
+          {plan.applicationLimit.toLocaleString()} complete AI applications
+        </p>
+        <p className="text-sm/6 text-gray-950/60">
+          {plan.billingPeriod === 'lifetime' ? 'Lifetime' : 'Per billing period'}
+        </p>
+      </div>
+
+      <div className="mt-auto pt-8">
+        <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
+        {/* Always rendered, hidden when absent, so every card reserves
+            the same height and the buttons above stay aligned. */}
+        <p
+          className={`mt-4 text-xs/5 text-gray-950/50 ${bestFor ? '' : 'invisible'}`}
+        >
+          <span className="font-medium text-gray-950/70">Best for</span>{' '}
+          {bestFor ?? 'placeholder'}
+        </p>
+      </div>
+    </CardFrame>
+  )
+}
+
+// All plans share the same core feature set — the application allowance
+// shown on each card above is what actually differs between them.
+function IncludedFeatures() {
+  const highlights = plans[0].highlights
+
+  return (
+    <Container className="pb-24">
+      <Subheading className="text-center">Included in every plan</Subheading>
+      <Heading as="div" className="mt-2 text-center">
+        The application allowance is what changes.
+      </Heading>
+      <ul className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+        {highlights.map(({ description }) => (
+          <li
+            key={description}
+            className="flex items-center gap-3 text-sm/6 text-gray-600"
+          >
+            <CheckIcon className="size-4 shrink-0 fill-green-600" />
+            {description}
+          </li>
+        ))}
+      </ul>
+    </Container>
   )
 }
 
@@ -422,67 +191,51 @@ function FrequentlyAskedQuestions() {
         <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
           <dl>
             <dt className="text-sm font-semibold">
-              What measures are in place to ensure the security of our data?
+              What counts as a complete AI application?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Data security is a top priority for us, which is ironic given that
-              our business depends on others not taking it very seriously. We
-              understand that any breach could put both us and most of our
-              customers out of business—and behind bars. We employ robust
-              security measures, including data encryption, secure data centers,
-              and regular security audits to ensure this never happens.
+              It&rsquo;s a role Easli fully prepares for you: matched against
+              your Career Profile, with a tailored CV and cover letter ready
+              for you to review. Free includes 5 for the lifetime of your
+              account. Paid plans renew your allowance every billing period.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Is there a mobile app available for your platform?
+              Does Easli submit applications for me?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, we offer a mobile app that provides all the key
-              functionalities of our desktop platform, allowing sales reps to
-              manage deals on the go. Additionally, we have another app
-              pre-installed on most modern smartphones that allows us to track
-              your location, listen to your conversations, and access your
-              camera and microphone at any time. This app is not available for
-              download.
+              No. Easli finds relevant roles, prepares a tailored CV and cover
+              letter for each one, and fills in supported application forms.
+              You review everything and submit the final application to the
+              employer yourself.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I customize the workflow to match our company’s deal process?
+              Does Easli send the same resume everywhere?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our platform is highly customizable, although there should be
-              no need. Before you sign up, we discreetly gather information
-              about your company and its processes from a variety of sources. We
-              then use this information to pre-configure the platform to match
-              your existing workflows. This is why we ask for your social
-              security number and access to your email account during the
-              sign-up process.
+              No. Easli uses your Career Profile and the requirements of each
+              role to tailor your CV using your real experience.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              What kind of support do you offer?
+              Are cover letters included?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              We offer comprehensive support through multiple channels,
-              including 24/7 live chat, email, and phone support. However, since
-              we have full access to your internal network, we will know if
-              you’re having issues before you do.
+              Yes. Personalized cover letters are included on every plan
+              rather than sold as a separate add-on.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I integrate the CRM with other sales intelligence tools?
+              Does Easli recommend every job it finds?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our solution integrates seamlessly with a variety of other
-              systems. However, be warned that most of these integrations are
-              short-lived. We have a dedicated team of engineers who
-              reverse-engineer the APIs of other tools, enabling us to build
-              their functionality into our product and eventually put them out
-              of business.
+              No. Jobs are checked against your preferences, background, and
+              eligibility before they are recommended to you.
             </dd>
           </dl>
         </div>
@@ -491,17 +244,7 @@ function FrequentlyAskedQuestions() {
   )
 }
 
-export default async function Pricing({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
-  let params = await searchParams
-  let tier =
-    typeof params.tier === 'string'
-      ? tiers.find(({ slug }) => slug === params.tier)!
-      : tiers[0]
-
+export default function Pricing() {
   return (
     <main className="overflow-hidden">
       <GradientBackground />
@@ -510,8 +253,7 @@ export default async function Pricing({
       </Container>
       <Header />
       <PricingCards />
-      <PricingTable selectedTier={tier} />
-      <Testimonial />
+      <IncludedFeatures />
       <FrequentlyAskedQuestions />
       <Footer />
     </main>
