@@ -7,6 +7,7 @@ import { Heading, Lead, Subheading } from '@/components/text'
 import { registerUrlForPlan } from '@/lib/auth'
 import { plans, planPrice, type Plan, type PlanId } from '@/lib/pricing'
 import { CheckIcon } from '@heroicons/react/16/solid'
+import { clsx } from 'clsx'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -41,6 +42,9 @@ const BEST_FOR: Partial<Record<PlanId, string>> = {
   max: 'A high-volume search',
 }
 
+// The one plan given visual emphasis on the pricing grid.
+const RECOMMENDED_PLAN_ID: PlanId = 'starter'
+
 function PricingCards() {
   return (
     <div className="py-24">
@@ -57,11 +61,22 @@ function PricingCards() {
   )
 }
 
-function CardFrame({ children }: { children: React.ReactNode }) {
+function CardFrame({
+  children,
+  featured = false,
+}: {
+  children: React.ReactNode
+  featured?: boolean
+}) {
   return (
     <div className="-m-2 grid h-full grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
       <div className="grid h-full grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
-        <div className="h-full rounded-3xl bg-white p-8 shadow-2xl ring-1 ring-black/5">
+        <div
+          className={clsx(
+            'h-full rounded-3xl bg-white p-8 shadow-2xl',
+            featured ? 'ring-2 ring-gray-950' : 'ring-1 ring-black/5',
+          )}
+        >
           {children}
         </div>
       </div>
@@ -72,12 +87,23 @@ function CardFrame({ children }: { children: React.ReactNode }) {
 function PricingCard({ plan }: { plan: Plan }) {
   const price = planPrice(plan)
   const bestFor = BEST_FOR[plan.id]
+  const featured = plan.id === RECOMMENDED_PLAN_ID
 
   return (
-    <CardFrame>
+    <CardFrame featured={featured}>
       <div className="flex h-full flex-col">
         <div>
-          <Subheading>{plan.name}</Subheading>
+          {/* Always rendered, hidden when not the recommended plan, so
+              every card's name starts at the same height. */}
+          <span
+            className={clsx(
+              'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium',
+              featured ? 'bg-gray-950 text-white' : 'invisible',
+            )}
+          >
+            Recommended
+          </span>
+          <Subheading className="mt-4">{plan.name}</Subheading>
           <p className="mt-2 text-sm/6 text-gray-950/75">
             {plan.description}
           </p>
