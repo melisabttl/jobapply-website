@@ -69,11 +69,11 @@ function CardFrame({
   featured?: boolean
 }) {
   return (
-    <div className="-m-2 grid h-full grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
-      <div className="grid h-full grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
+    <div className="-m-2 flex flex-col rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
+      <div className="flex flex-1 flex-col rounded-4xl p-2 shadow-md shadow-black/5">
         <div
           className={clsx(
-            'h-full rounded-3xl bg-white p-8 shadow-2xl',
+            'flex flex-1 flex-col rounded-3xl bg-white p-8 shadow-2xl',
             featured ? 'ring-2 ring-gray-950' : 'ring-1 ring-black/5',
           )}
         >
@@ -91,68 +91,62 @@ function PricingCard({ plan }: { plan: Plan }) {
 
   return (
     <CardFrame featured={featured}>
-      <div className="flex h-full flex-col">
-        <div>
-          {/* Always rendered, hidden when not the recommended plan, so
-              every card's name starts at the same height. */}
-          <span
-            className={clsx(
-              'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium',
-              featured ? 'bg-gray-950 text-white' : 'invisible',
-            )}
-          >
-            Recommended
-          </span>
-          <Subheading className="mt-4">{plan.name}</Subheading>
-          <p className="mt-2 text-sm/6 text-gray-950/75">
-            {plan.description}
-          </p>
-        </div>
-
-        <div className="mt-6 flex items-center gap-4">
-          {price.hasDiscount && (
-            <div className="text-2xl font-medium text-gray-950/40 line-through">
-              ${price.regularAmount}
-            </div>
+      <div>
+        {/* Always rendered, hidden when not the recommended plan, so
+            every card's name starts at the same height. */}
+        <span
+          className={clsx(
+            'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium',
+            featured ? 'bg-gray-950 text-white' : 'invisible',
           )}
-          <div className="text-5xl font-medium text-gray-950">
-            ${price.amount}
+        >
+          Recommended
+        </span>
+        <Subheading className="mt-4">{plan.name}</Subheading>
+        <p className="mt-2 text-sm/6 text-gray-950/75">{plan.description}</p>
+      </div>
+
+      <div className="mt-6 flex items-center gap-4">
+        {price.hasDiscount && (
+          <div className="text-2xl font-medium text-gray-950/40 line-through">
+            ${price.regularAmount}
           </div>
-          {plan.billingPeriod !== 'lifetime' && (
-            <div className="text-sm/5 text-gray-950/75">
-              <p>USD</p>
-              <p>{price.billingSuffix}</p>
-            </div>
-          )}
-        </div>
-        {price.discountLabel && (
-          <p className="mt-2 inline-flex items-center self-start rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
-            {price.discountLabel}
-          </p>
         )}
-
-        <div className="mt-6">
-          <p className="text-sm/6 font-medium text-gray-950">
-            {plan.applicationLimit.toLocaleString()} complete AI applications
-          </p>
-          <p className="text-sm/6 text-gray-950/60">
-            {plan.billingPeriod === 'lifetime'
-              ? 'Lifetime'
-              : 'Per billing period'}
-          </p>
+        <div className="text-5xl font-medium text-gray-950">
+          ${price.amount}
         </div>
+        {plan.billingPeriod !== 'lifetime' && (
+          <div className="text-sm/5 text-gray-950/75">
+            <p>USD</p>
+            <p>{price.billingSuffix}</p>
+          </div>
+        )}
+      </div>
+      {price.discountLabel && (
+        <p className="mt-2 inline-flex items-center self-start rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
+          {price.discountLabel}
+        </p>
+      )}
 
-        <div className="mt-auto pt-8">
-          <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
-          {/* Always rendered, hidden when absent, so every card reserves
-              the same height and the buttons above stay aligned. */}
-          <p
-            className={`mt-4 text-xs/5 text-gray-950/50 ${bestFor ? '' : 'invisible'}`}
-          >
-            <span className="font-medium text-gray-950/70">Best for</span>{' '}
-            {bestFor ?? 'placeholder'}
-          </p>
-        </div>
+      <div className="mt-6">
+        <p className="text-sm/6 font-medium text-gray-950">
+          {plan.applicationLimit.toLocaleString()} complete AI applications
+        </p>
+        <p className="text-sm/6 text-gray-950/60">
+          {plan.billingPeriod === 'lifetime' ? 'Lifetime' : 'Per billing period'}
+        </p>
+      </div>
+
+      <div className="mt-auto pt-8">
+        <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
+        {/* Always rendered, hidden when absent, so every card reserves
+            the same height and the buttons above stay aligned. */}
+        <p
+          className={`mt-4 text-xs/5 text-gray-950/50 ${bestFor ? '' : 'invisible'}`}
+        >
+          <span className="font-medium text-gray-950/70">Best for</span>{' '}
+          {bestFor ?? 'placeholder'}
+        </p>
       </div>
     </CardFrame>
   )
