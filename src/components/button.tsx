@@ -22,6 +22,15 @@ const variants = {
     'text-sm font-medium whitespace-nowrap text-gray-950',
     'data-disabled:bg-transparent data-disabled:opacity-40 data-hover:bg-gray-50',
   ),
+  // Same size/shape as primary, inverted to white — for a muted CTA that
+  // still sits at the same height as a primary button beside it (e.g. the
+  // non-featured cards on a pricing grid).
+  light: clsx(
+    'inline-flex items-center justify-center px-4 py-[calc(--spacing(2)-1px)]',
+    'rounded-full border border-transparent bg-white shadow-md ring-1 ring-black/10',
+    'text-base font-medium whitespace-nowrap text-gray-950',
+    'data-disabled:bg-white data-disabled:opacity-40 data-hover:bg-gray-50',
+  ),
 }
 
 type ButtonProps = {
