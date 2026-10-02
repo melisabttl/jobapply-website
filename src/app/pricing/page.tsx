@@ -4,7 +4,7 @@ import { Footer } from '@/components/footer'
 import { Gradient, GradientBackground } from '@/components/gradient'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
-import { EASLI_APP_REGISTER_URL } from '@/lib/auth'
+import { registerUrlForPlan } from '@/lib/auth'
 import { plans, planPrice, type Plan } from '@/lib/pricing'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import type { Metadata } from 'next'
@@ -94,7 +94,7 @@ function PricingCard({ plan }: { plan: Plan }) {
         {plan.billingPeriod === 'lifetime' ? 'Lifetime' : 'Per billing period'}
       </p>
       <div className="mt-8">
-        <Button href={EASLI_APP_REGISTER_URL}>{plan.cta}</Button>
+        <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
       </div>
       <div className="mt-8">
         <h3 className="text-sm/6 font-medium text-gray-950">
