@@ -5,14 +5,14 @@ import { Gradient, GradientBackground } from '@/components/gradient'
 import { Navbar } from '@/components/navbar'
 import { Heading, Lead, Subheading } from '@/components/text'
 import { EASLI_APP_REGISTER_URL } from '@/lib/auth'
-import { plan, planPrice } from '@/lib/pricing'
+import { plans, planPrice, type Plan } from '@/lib/pricing'
 import { CheckIcon } from '@heroicons/react/16/solid'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Easli Pro is $19/month. Find relevant jobs, tailor your CV for each role, and generate personalized cover letters — then review and submit each application yourself.',
+    'Easli plans are built around complete AI applications: start free, then upgrade to Starter, Pro, or Max as your job search picks up.',
 }
 
 function Header() {
@@ -20,12 +20,14 @@ function Header() {
     <Container className="mt-16">
       <Subheading>Pricing</Subheading>
       <Heading as="h1" className="mt-2">
-        One plan. Everything included.
+        Plans for every stage of your job search.
       </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Easli finds relevant roles, evaluates them against your Career Profile,
-        and prepares a tailored CV and cover letter for each one. You review
-        everything and submit the final application yourself.
+        Easli finds relevant roles, evaluates them against your Career
+        Profile, and prepares a tailored CV and cover letter for each one. You
+        review everything and submit the final application yourself. Every
+        plan is priced around complete AI applications — how many roles Easli
+        fully prepares for you.
       </Lead>
     </Container>
   )
@@ -36,9 +38,10 @@ function PricingCards() {
     <div className="py-24">
       <Container>
         <Gradient className="overflow-hidden rounded-4xl p-4 ring-1 ring-black/5 ring-inset md:p-6 lg:p-8">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start">
-            <PricingCard />
-            <IncludedCard />
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {plans.map((plan) => (
+              <PricingCard key={plan.id} plan={plan} />
+            ))}
           </div>
         </Gradient>
       </Container>
@@ -48,7 +51,7 @@ function PricingCards() {
 
 function CardFrame({ children }: { children: React.ReactNode }) {
   return (
-    <div className="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-lg:mx-auto max-lg:w-full max-lg:max-w-md">
+    <div className="-m-2 grid grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
       <div className="grid grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
         <div className="rounded-3xl bg-white p-10 pb-9 shadow-2xl ring-1 ring-black/5">
           {children}
@@ -58,22 +61,40 @@ function CardFrame({ children }: { children: React.ReactNode }) {
   )
 }
 
-function PricingCard() {
-  const { amount, suffix } = planPrice()
+function PricingCard({ plan }: { plan: Plan }) {
+  const price = planPrice(plan)
 
   return (
     <CardFrame>
       <Subheading>{plan.name}</Subheading>
       <p className="mt-2 text-sm/6 text-gray-950/75">{plan.description}</p>
       <div className="mt-8 flex items-center gap-4">
-        <div className="text-5xl font-medium text-gray-950">${amount}</div>
+        {price.hasDiscount && (
+          <div className="text-2xl font-medium text-gray-950/40 line-through">
+            ${price.regularAmount}
+          </div>
+        )}
+        <div className="text-5xl font-medium text-gray-950">
+          ${price.amount}
+        </div>
         <div className="text-sm/5 text-gray-950/75">
           <p>USD</p>
-          <p>{suffix}</p>
+          <p>{price.billingSuffix}</p>
         </div>
       </div>
+      {price.discountLabel && (
+        <p className="mt-2 inline-flex items-center rounded-full bg-gray-950/5 px-2.5 py-1 text-xs font-medium text-gray-950">
+          {price.discountLabel}
+        </p>
+      )}
+      <p className="mt-6 text-sm/6 font-medium text-gray-950">
+        {plan.applicationLimit.toLocaleString()} complete AI applications
+      </p>
+      <p className="text-sm/6 text-gray-950/60">
+        {plan.billingPeriod === 'lifetime' ? 'Lifetime' : 'Per billing period'}
+      </p>
       <div className="mt-8">
-        <Button href={EASLI_APP_REGISTER_URL}>Get started</Button>
+        <Button href={EASLI_APP_REGISTER_URL}>{plan.cta}</Button>
       </div>
       <div className="mt-8">
         <h3 className="text-sm/6 font-medium text-gray-950">
@@ -85,42 +106,6 @@ function PricingCard() {
           ))}
         </ul>
       </div>
-    </CardFrame>
-  )
-}
-
-function IncludedCard() {
-  const sections = [...new Set(plan.features.map(({ section }) => section))]
-
-  return (
-    <CardFrame>
-      <Subheading>Everything in {plan.name}</Subheading>
-      <div className="mt-6 space-y-8">
-        {sections.map((section) => (
-          <div key={section}>
-            <h3 className="-mx-4 rounded-lg bg-gray-50 px-4 py-3 text-sm/6 font-semibold text-gray-950">
-              {section}
-            </h3>
-            <ul className="mt-2">
-              {plan.features
-                .filter((feature) => feature.section === section)
-                .map(({ name }) => (
-                  <li
-                    key={name}
-                    className="flex items-center gap-3 border-b border-gray-100 py-3 text-sm/6 text-gray-600 last:border-none"
-                  >
-                    <CheckIcon className="size-4 shrink-0 fill-green-600" />
-                    {name}
-                  </li>
-                ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <p className="mt-8 text-sm/6 text-gray-500">
-        Easli prepares your application. You review it and submit it to the
-        employer yourself.
-      </p>
     </CardFrame>
   )
 }
@@ -154,6 +139,49 @@ function PlusIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
+// All plans share the same core feature set — the application allowance
+// shown on each card above is what actually differs between them.
+function IncludedFeatures() {
+  let sections = [
+    ...new Set(
+      plans[0].features
+        .filter((feature) => feature.section !== 'Allowance')
+        .map(({ section }) => section),
+    ),
+  ]
+
+  return (
+    <Container className="pb-24">
+      <Subheading className="text-center">Included in every plan</Subheading>
+      <Heading as="div" className="mt-2 text-center">
+        The application allowance is what changes.
+      </Heading>
+      <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-3">
+        {sections.map((section) => (
+          <div key={section}>
+            <h3 className="text-sm/6 font-semibold text-gray-950">
+              {section}
+            </h3>
+            <ul className="mt-4 space-y-3">
+              {plans[0].features
+                .filter((feature) => feature.section === section)
+                .map(({ name }) => (
+                  <li
+                    key={name}
+                    className="flex items-center gap-3 text-sm/6 text-gray-600"
+                  >
+                    <CheckIcon className="size-4 shrink-0 fill-green-600" />
+                    {name}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Container>
+  )
+}
+
 function FrequentlyAskedQuestions() {
   return (
     <Container>
@@ -165,6 +193,17 @@ function FrequentlyAskedQuestions() {
           Your questions answered.
         </Heading>
         <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
+          <dl>
+            <dt className="text-sm font-semibold">
+              What counts as a complete AI application?
+            </dt>
+            <dd className="mt-4 text-sm/6 text-gray-600">
+              It&rsquo;s a role Easli fully prepares for you: matched against
+              your Career Profile, with a tailored CV and cover letter ready
+              for you to review. Free includes 5 for the lifetime of your
+              account. Paid plans renew your allowance every billing period.
+            </dd>
+          </dl>
           <dl>
             <dt className="text-sm font-semibold">
               Does Easli submit applications for me?
@@ -190,8 +229,8 @@ function FrequentlyAskedQuestions() {
               Are cover letters included?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes. Personalized cover letters are included in Easli Pro rather
-              than sold as a separate add-on.
+              Yes. Personalized cover letters are included on every plan
+              rather than sold as a separate add-on.
             </dd>
           </dl>
           <dl>
@@ -218,6 +257,7 @@ export default function Pricing() {
       </Container>
       <Header />
       <PricingCards />
+      <IncludedFeatures />
       <FrequentlyAskedQuestions />
       <Footer />
     </main>

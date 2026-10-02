@@ -102,11 +102,12 @@ export default function Terms() {
           </Section>
           <Section title="Plans and billing">
             <p>
-              Easli Pro is a subscription billed monthly in advance. It renews
-              automatically each month until you cancel. You can cancel at any
-              time to stop future renewal charges. Payments are processed by
-              Paddle, our Merchant of Record, and applicable taxes may be added
-              at checkout.
+              Easli offers a free plan and paid plans. Easli paid plans are
+              subscriptions billed in advance for each billing period and
+              renew automatically until you cancel. You can cancel at any time
+              to stop future renewal charges. Payments are processed by
+              Paddle, our Merchant of Record, and applicable taxes may be
+              added at checkout.
             </p>
             <p>
               Current pricing is available on our{' '}

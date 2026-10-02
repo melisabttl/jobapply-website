@@ -55,8 +55,8 @@ export default function Refund() {
           </Section>
           <Section title="Your subscription">
             <p>
-              Easli Pro is billed monthly in advance and renews automatically
-              each month until you cancel.
+              Easli paid plans are billed in advance for each billing period
+              and renew automatically until you cancel.
             </p>
           </Section>
           <Section title="Cancelling">

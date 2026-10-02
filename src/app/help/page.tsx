@@ -64,11 +64,12 @@ function HelpTopics() {
         <dl>
           <dt className="text-sm font-semibold">How much does Easli cost?</dt>
           <dd className="mt-4 text-sm/6 text-gray-600">
-            Easli Pro is $19 USD per month. See{' '}
+            Easli has a free plan and paid plans priced around complete AI
+            applications per billing period. See{' '}
             <Link href="/pricing" className="font-medium hover:text-gray-600">
               pricing
-            </Link>
-            .
+            </Link>{' '}
+            for current plans and limits.
           </dd>
         </dl>
         <dl>
