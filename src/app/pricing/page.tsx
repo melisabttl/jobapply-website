@@ -45,16 +45,6 @@ const BEST_FOR: Partial<Record<PlanId, string>> = {
 // The one plan given visual emphasis on the pricing grid.
 const RECOMMENDED_PLAN_ID: PlanId = 'starter'
 
-// Each card's background samples the same brand gradient behind it
-// (gradient.tsx's #fff1be -> #ee87cb -> #b060ff) at low opacity, so the
-// cards pick up the gradient's colors instead of introducing new ones.
-const CARD_TINT: Record<PlanId, string> = {
-  free: 'bg-white',
-  starter: 'bg-linear-to-br from-[#fff1be]/25 via-white to-white',
-  pro: 'bg-linear-to-br from-white via-[#ee87cb]/8 to-white',
-  max: 'bg-linear-to-br from-white via-white to-[#b060ff]/10',
-}
-
 function PricingCards() {
   return (
     <div className="py-24">
@@ -74,19 +64,16 @@ function PricingCards() {
 function CardFrame({
   children,
   featured = false,
-  tint,
 }: {
   children: React.ReactNode
   featured?: boolean
-  tint: string
 }) {
   return (
     <div className="-m-2 grid h-full grid-cols-1 rounded-4xl shadow-[inset_0_0_2px_1px_#ffffff4d] ring-1 ring-black/5 max-sm:mx-auto max-sm:w-full max-sm:max-w-md">
       <div className="grid h-full grid-cols-1 rounded-4xl p-2 shadow-md shadow-black/5">
         <div
           className={clsx(
-            'h-full rounded-3xl p-8 shadow-2xl',
-            tint,
+            'h-full rounded-3xl bg-white p-8 shadow-2xl',
             featured ? 'ring-2 ring-gray-950' : 'ring-1 ring-black/5',
           )}
         >
@@ -103,22 +90,20 @@ function PricingCard({ plan }: { plan: Plan }) {
   const featured = plan.id === RECOMMENDED_PLAN_ID
 
   return (
-    <CardFrame featured={featured} tint={CARD_TINT[plan.id]}>
+    <CardFrame featured={featured}>
       <div className="flex h-full flex-col">
         <div>
-          {/* Badge always rendered, hidden when not the recommended plan,
-              so every card's header row takes the same height. */}
-          <div className="flex items-center justify-between gap-2">
-            <Subheading>{plan.name}</Subheading>
-            <span
-              className={clsx(
-                'inline-flex shrink-0 items-center rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide uppercase',
-                featured ? 'bg-gray-950 text-white' : 'invisible',
-              )}
-            >
-              Most popular
-            </span>
-          </div>
+          {/* Always rendered, hidden when not the recommended plan, so
+              every card's name starts at the same height. */}
+          <span
+            className={clsx(
+              'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-medium',
+              featured ? 'bg-gray-950 text-white' : 'invisible',
+            )}
+          >
+            Recommended
+          </span>
+          <Subheading className="mt-4">{plan.name}</Subheading>
           <p className="mt-2 text-sm/6 text-gray-950/75">
             {plan.description}
           </p>
@@ -158,13 +143,7 @@ function PricingCard({ plan }: { plan: Plan }) {
         </div>
 
         <div className="mt-auto pt-8">
-          <Button
-            href={registerUrlForPlan(plan.id)}
-            variant={featured ? 'primary' : 'light'}
-            className="w-full"
-          >
-            {plan.cta}
-          </Button>
+          <Button href={registerUrlForPlan(plan.id)}>{plan.cta}</Button>
           {/* Always rendered, hidden when absent, so every card reserves
               the same height and the buttons above stay aligned. */}
           <p
