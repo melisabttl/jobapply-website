@@ -1,3 +1,4 @@
+import { AutoApplyFeed } from '@/components/auto-apply-feed'
 import { BentoCard } from '@/components/bento-card'
 import { Button } from '@/components/button'
 import { Container } from '@/components/container'
@@ -42,15 +43,20 @@ function Hero() {
           <h1 className="font-display text-6xl/[0.9] font-medium tracking-tight text-balance text-gray-950 sm:text-8xl/[0.8] md:text-9xl/[0.8]">
             Close every deal.
           </h1>
-          <p className="mt-8 max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
-            Radiant helps you sell more by revealing sensitive information about
-            your customers.
-          </p>
-          <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
-            <Button href="#">Get started</Button>
-            <Button variant="secondary" href="/pricing">
-              See pricing
-            </Button>
+          <div className="mt-8 flex flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="max-w-lg text-xl/7 font-medium text-gray-950/75 sm:text-2xl/8">
+                Radiant helps you sell more by revealing sensitive information
+                about your customers.
+              </p>
+              <div className="mt-12 flex flex-col gap-x-6 gap-y-4 sm:flex-row">
+                <Button href="#">Get started</Button>
+                <Button variant="secondary" href="/pricing">
+                  See pricing
+                </Button>
+              </div>
+            </div>
+            <AutoApplyFeed className="lg:-mb-8" />
           </div>
         </div>
       </Container>
