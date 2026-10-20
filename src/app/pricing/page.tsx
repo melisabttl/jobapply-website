@@ -17,92 +17,103 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'Companies all over the world have closed millions of deals with Radiant. Sign up today and start selling smarter.',
+    'Simple pricing for Easli. Pick a plan, upload your CV and start sending tailored applications today.',
 }
 
 const tiers = [
   {
     name: 'Starter' as const,
     slug: 'starter',
-    description: 'Everything you need to start selling.',
-    priceMonthly: 99,
+    description: 'Everything you need to start applying.',
+    priceMonthly: 19,
     href: '#',
     highlights: [
-      { description: 'Up to 3 team members' },
-      { description: 'Up to 5 deal progress boards' },
-      { description: 'Source leads from select platforms' },
-      { description: 'RadiantAI integrations', disabled: true },
-      { description: 'Competitor analysis', disabled: true },
+      { description: '50 tailored applications a month' },
+      { description: 'Tailored CV and cover letter for each role' },
+      { description: 'Search the main job boards' },
+      { description: 'Auto-apply', disabled: true },
+      { description: 'Priority support', disabled: true },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 3 },
-      { section: 'Features', name: 'Deal progress boards', value: 5 },
-      { section: 'Features', name: 'Sourcing platforms', value: 'Select' },
-      { section: 'Features', name: 'Contacts', value: 100 },
-      { section: 'Features', name: 'AI assisted outreach', value: false },
-      { section: 'Analysis', name: 'Competitor analysis', value: false },
-      { section: 'Analysis', name: 'Dashboard reporting', value: false },
-      { section: 'Analysis', name: 'Community insights', value: false },
-      { section: 'Analysis', name: 'Performance analysis', value: false },
+      { section: 'Search', name: 'Tailored applications per month', value: 50 },
+      { section: 'Search', name: 'Job boards searched', value: 'Main boards' },
+      { section: 'Search', name: 'Cover letters', value: true },
+      { section: 'Automation', name: 'Auto-apply', value: false },
+      { section: 'Automation', name: 'Match score filtering', value: false },
+      {
+        section: 'Automation',
+        name: 'Application tracking board',
+        value: true,
+      },
       { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: false },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
+      { section: 'Support', name: 'Priority support', value: false },
+      { section: 'Support', name: 'Career coach review', value: false },
     ],
   },
   {
-    name: 'Growth' as const,
-    slug: 'growth',
-    description: 'All the extras for your growing team.',
-    priceMonthly: 149,
+    name: 'Pro' as const,
+    slug: 'pro',
+    description: 'All the extras for an active job search.',
+    priceMonthly: 39,
     href: '#',
     highlights: [
-      { description: 'Up to 10 team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 50 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: '5 competitor analyses per month' },
+      { description: '250 tailored applications a month' },
+      { description: 'Tailored CV and cover letter for each role' },
+      { description: 'Search over 50 job boards' },
+      { description: 'Auto-apply' },
+      { description: 'Match score filtering' },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 10 },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 1000 },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: '5 / month' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
+      {
+        section: 'Search',
+        name: 'Tailored applications per month',
+        value: 250,
+      },
+      { section: 'Search', name: 'Job boards searched', value: '50+' },
+      { section: 'Search', name: 'Cover letters', value: true },
+      { section: 'Automation', name: 'Auto-apply', value: true },
+      { section: 'Automation', name: 'Match score filtering', value: true },
+      {
+        section: 'Automation',
+        name: 'Application tracking board',
+        value: true,
+      },
       { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: false },
+      { section: 'Support', name: 'Priority support', value: true },
+      { section: 'Support', name: 'Career coach review', value: false },
     ],
   },
   {
-    name: 'Enterprise' as const,
-    slug: 'enterprise',
-    description: 'Added flexibility to close deals at scale.',
-    priceMonthly: 299,
+    name: 'Max' as const,
+    slug: 'max',
+    description: 'Added speed for a serious, fast search.',
+    priceMonthly: 79,
     href: '#',
     highlights: [
-      { description: 'Unlimited active team members' },
-      { description: 'Unlimited deal progress boards' },
-      { description: 'Source leads from over 100 verified platforms' },
-      { description: 'RadiantAI integrations' },
-      { description: 'Unlimited competitor analyses' },
+      { description: 'Unlimited tailored applications' },
+      { description: 'Tailored CV and cover letter for each role' },
+      { description: 'Search over 100 job boards' },
+      { description: 'Auto-apply' },
+      { description: 'Career coach review' },
     ],
     features: [
-      { section: 'Features', name: 'Accounts', value: 'Unlimited' },
-      { section: 'Features', name: 'Deal progress boards', value: 'Unlimited' },
-      { section: 'Features', name: 'Sourcing platforms', value: '100+' },
-      { section: 'Features', name: 'Contacts', value: 'Unlimited' },
-      { section: 'Features', name: 'AI assisted outreach', value: true },
-      { section: 'Analysis', name: 'Competitor analysis', value: 'Unlimited' },
-      { section: 'Analysis', name: 'Dashboard reporting', value: true },
-      { section: 'Analysis', name: 'Community insights', value: true },
-      { section: 'Analysis', name: 'Performance analysis', value: true },
+      {
+        section: 'Search',
+        name: 'Tailored applications per month',
+        value: 'Unlimited',
+      },
+      { section: 'Search', name: 'Job boards searched', value: '100+' },
+      { section: 'Search', name: 'Cover letters', value: true },
+      { section: 'Automation', name: 'Auto-apply', value: true },
+      { section: 'Automation', name: 'Match score filtering', value: true },
+      {
+        section: 'Automation',
+        name: 'Application tracking board',
+        value: true,
+      },
       { section: 'Support', name: 'Email support', value: true },
-      { section: 'Support', name: '24 / 7 call center support', value: true },
-      { section: 'Support', name: 'Dedicated account manager', value: true },
+      { section: 'Support', name: 'Priority support', value: true },
+      { section: 'Support', name: 'Career coach review', value: true },
     ],
   },
 ]
@@ -110,10 +121,10 @@ const tiers = [
 function Header() {
   return (
     <Container className="mt-16">
-      <Heading as="h1">Pricing that grows with your team size.</Heading>
+      <Heading as="h1">Pricing that fits your job search.</Heading>
       <Lead className="mt-6 max-w-3xl">
-        Companies all over the world have closed millions of deals with Radiant.
-        Sign up today and start selling smarter.
+        Simple pricing for Easli. Pick a plan, upload your CV and start sending
+        tailored applications today.
       </Lead>
     </Container>
   )
@@ -152,12 +163,10 @@ function PricingCard({ tier }: { tier: (typeof tiers)[number] }) {
             </div>
           </div>
           <div className="mt-8">
-            <Button href={tier.href}>Start a free trial</Button>
+            <Button href={tier.href}>Start applying</Button>
           </div>
           <div className="mt-8">
-            <h3 className="text-sm/6 font-medium text-gray-950">
-              Start selling with:
-            </h3>
+            <h3 className="text-sm/6 font-medium text-gray-950">Includes:</h3>
             <ul className="mt-3 space-y-3">
               {tier.highlights.map((props, featureIndex) => (
                 <FeatureItem key={featureIndex} {...props} />
@@ -389,15 +398,15 @@ function Testimonial() {
             <figure className="mx-auto flex max-w-xl flex-col gap-16 max-lg:text-center">
               <blockquote>
                 <p className="relative text-3xl tracking-tight text-white before:absolute before:-translate-x-full before:content-['“'] after:absolute after:content-['”'] lg:text-4xl">
-                  Thanks to Radiant, we&apos;re finding new leads that we never
-                  would have found with legal methods.
+                  Easli sent 40 tailored applications in my first week. I had
+                  three interviews before I would have finished one.
                 </p>
               </blockquote>
               <figcaption className="mt-auto">
-                <p className="text-sm/6 font-medium text-white">Tina Yards</p>
+                <p className="text-sm/6 font-medium text-white">Tina Y.</p>
                 <p className="text-sm/6 font-medium">
                   <span className="bg-linear-to-r from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] bg-clip-text text-transparent">
-                    VP of Sales, Protocol
+                    Product Designer
                   </span>
                 </p>
               </figcaption>
@@ -422,67 +431,46 @@ function FrequentlyAskedQuestions() {
         <div className="mx-auto mt-16 mb-32 max-w-xl space-y-12">
           <dl>
             <dt className="text-sm font-semibold">
-              What measures are in place to ensure the security of our data?
+              Does Easli make things up on my CV?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Data security is a top priority for us, which is ironic given that
-              our business depends on others not taking it very seriously. We
-              understand that any breach could put both us and most of our
-              customers out of business—and behind bars. We employ robust
-              security measures, including data encryption, secure data centers,
-              and regular security audits to ensure this never happens.
+              No. Easli only reorders, rephrases and emphasises experience you
+              have already given it. Nothing is invented, and you can review
+              every change before an application goes out.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Is there a mobile app available for your platform?
+              Can I review applications before they are sent?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, we offer a mobile app that provides all the key
-              functionalities of our desktop platform, allowing sales reps to
-              manage deals on the go. Additionally, we have another app
-              pre-installed on most modern smartphones that allows us to track
-              your location, listen to your conversations, and access your
-              camera and microphone at any time. This app is not available for
-              download.
+              Yes. By default every application waits for your approval.
+              Auto-apply is optional and you can switch it on only for the roles
+              and match scores you are comfortable with.
             </dd>
           </dl>
           <dl>
             <dt className="text-sm font-semibold">
-              Can I customize the workflow to match our company’s deal process?
+              Which job boards does Easli search?
             </dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our platform is highly customizable, although there should be
-              no need. Before you sign up, we discreetly gather information
-              about your company and its processes from a variety of sources. We
-              then use this information to pre-configure the platform to match
-              your existing workflows. This is why we ask for your social
-              security number and access to your email account during the
-              sign-up process.
+              Easli searches the major job boards and company career pages, and
+              the list keeps growing. Higher plans search more sources.
             </dd>
           </dl>
           <dl>
-            <dt className="text-sm font-semibold">
-              What kind of support do you offer?
-            </dt>
+            <dt className="text-sm font-semibold">How is my data handled?</dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              We offer comprehensive support through multiple channels,
-              including 24/7 live chat, email, and phone support. However, since
-              we have full access to your internal network, we will know if
-              you’re having issues before you do.
+              Your CV and details are used only to find and prepare your
+              applications. They are encrypted and never sold or shared with
+              employers without your approval.
             </dd>
           </dl>
           <dl>
-            <dt className="text-sm font-semibold">
-              Can I integrate the CRM with other sales intelligence tools?
-            </dt>
+            <dt className="text-sm font-semibold">Can I cancel any time?</dt>
             <dd className="mt-4 text-sm/6 text-gray-600">
-              Yes, our solution integrates seamlessly with a variety of other
-              systems. However, be warned that most of these integrations are
-              short-lived. We have a dedicated team of engineers who
-              reverse-engineer the APIs of other tools, enabling us to build
-              their functionality into our product and eventually put them out
-              of business.
+              Yes. Plans are monthly and you can cancel whenever you like from
+              your account.
             </dd>
           </dl>
         </div>

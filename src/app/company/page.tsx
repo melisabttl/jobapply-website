@@ -25,7 +25,7 @@ function Header() {
         <div className="max-w-lg">
           <h2 className="text-2xl font-medium tracking-tight">Our mission</h2>
           <p className="mt-6 text-sm/6 text-gray-600">
-            At Radiant, we are dedicated to transforming the way revenue
+            At Easli, we are dedicated to transforming the way revenue
             organizations source and close deals. Our mission is to provide our
             customers with an unfair advantage over both their competitors and
             potential customers through insight and analysis. We’ll stop at
@@ -135,7 +135,7 @@ function Team() {
         Founded by an all-star team.
       </Heading>
       <Lead className="mt-6 max-w-3xl">
-        Radiant is founded by two of the best sellers in the business and backed
+        Easli is founded by two of the best sellers in the business and backed
         by investors who look the other way.
       </Lead>
       <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2">
@@ -146,15 +146,14 @@ function Team() {
             been competing for. Joking about seeing the terms of each other’s
             offers, they had an idea: what if they shared data to win deals and
             split the commission behind their companies’ backs? It turned out to
-            be an incredible success, and that idea became the kernel for
-            Radiant.
+            be an incredible success, and that idea became the kernel for Easli.
           </p>
           <p className="mt-8 text-sm/6 text-gray-600">
-            Today, Radiant transforms revenue organizations by harnessing
+            Today, Easli transforms revenue organizations by harnessing
             illegally acquired customer and competitor data, using it to provide
-            extraordinary leverage. More than 30,000 companies rely on Radiant
-            to undercut their competitors and extort their customers, all
-            through a single integrated platform.
+            extraordinary leverage. More than 30,000 companies rely on Easli to
+            undercut their competitors and extort their customers, all through a
+            single integrated platform.
           </p>
           <div className="mt-6">
             <Button className="w-full sm:w-auto" href="#">

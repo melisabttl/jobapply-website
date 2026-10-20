@@ -4,14 +4,17 @@ import { Button } from '@/components/button'
 import { Container } from '@/components/container'
 import { Footer } from '@/components/footer'
 import { Gradient } from '@/components/gradient'
-import { Keyboard } from '@/components/keyboard'
-import { LinkedAvatars } from '@/components/linked-avatars'
-import { LogoCloud } from '@/components/logo-cloud'
 import { LogoCluster } from '@/components/logo-cluster'
 import { LogoTimeline } from '@/components/logo-timeline'
-import { Map } from '@/components/map'
 import { Navbar } from '@/components/navbar'
-import { Screenshot } from '@/components/screenshot'
+import {
+  CvGraphic,
+  LetterGraphic,
+  MatchGraphic,
+  PipelineGraphic,
+  ReviewGraphic,
+  StatsGraphic,
+} from '@/components/product-graphics'
 import { Testimonials } from '@/components/testimonials'
 import { Heading, Subheading } from '@/components/text'
 import type { Metadata } from 'next'
@@ -53,19 +56,69 @@ function Hero() {
   )
 }
 
+const STEPS = [
+  {
+    n: '01',
+    title: 'Upload your CV once',
+    body: 'Tell Easli what you are looking for: roles, locations, salary. It learns your experience and your voice.',
+  },
+  {
+    n: '02',
+    title: 'We find and tailor',
+    body: 'Easli finds relevant roles every day and rewrites your CV and cover letter for each one in seconds.',
+  },
+  {
+    n: '03',
+    title: 'Review and submit',
+    body: 'Every application is ready and waiting. Approve it, tweak it, or switch on auto-apply and let it run.',
+  },
+]
+
+function StatsStrip() {
+  return (
+    <Container className="mt-10">
+      <dl className="grid grid-cols-1 gap-8 text-center sm:grid-cols-3">
+        {[
+          ['300+', 'applications sent every week'],
+          ['3 sec', 'to tailor a CV to a role'],
+          ['94%', 'average role match'],
+        ].map(([n, label]) => (
+          <div key={label}>
+            <dt className="font-display text-5xl font-medium tracking-tight text-gray-950">
+              {n}
+            </dt>
+            <dd className="mt-1 text-sm/6 text-gray-600">{label}</dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  )
+}
+
 function FeatureSection() {
   return (
-    <div id="how-it-works" className="overflow-hidden">
+    <div id="how-it-works" className="scroll-mt-8 overflow-hidden">
       <Container className="pb-24">
-        <Heading as="h2" className="max-w-3xl">
-          A snapshot of your entire sales pipeline.
+        <Subheading>How it works</Subheading>
+        <Heading as="h2" className="mt-2 max-w-3xl">
+          From search to submitted in three steps.
         </Heading>
-        <Screenshot
-          width={1216}
-          height={768}
-          src="/screenshots/app.png"
-          className="mt-16 h-144 sm:h-auto sm:w-304"
-        />
+        <ol className="mt-16 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {STEPS.map((step) => (
+            <li
+              key={step.n}
+              className="rounded-lg bg-white p-10 shadow-xs ring-1 ring-black/5"
+            >
+              <div className="font-display text-5xl font-medium text-gray-950/20">
+                {step.n}
+              </div>
+              <h3 className="mt-6 text-2xl/8 font-medium tracking-tight text-gray-950">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm/6 text-gray-600">{step.body}</p>
+            </li>
+          ))}
+        </ol>
       </Container>
     </div>
   )
@@ -73,60 +126,52 @@ function FeatureSection() {
 
 function BentoSection() {
   return (
-    <Container>
-      <Subheading>Sales</Subheading>
-      <Heading as="h3" className="mt-2 max-w-3xl">
-        Know more about your customers than they do.
-      </Heading>
+    <div id="product" className="scroll-mt-8">
+      <Container>
+        <Subheading>Product</Subheading>
+        <Heading as="h3" className="mt-2 max-w-3xl">
+          Apply to more of the right jobs, with less effort.
+        </Heading>
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
-        <BentoCard
-          eyebrow="Insight"
-          title="Get perfect clarity"
-          description="Radiant uses social engineering to build a detailed financial picture of your leads. Know their budget, compensation package, social security number, and more."
-          graphic={
-            <div className="h-80 bg-[url(/screenshots/profile.png)] bg-size-[1000px_560px] bg-position-[left_-109px_top_-112px] bg-no-repeat" />
-          }
-          fade={['bottom']}
-          className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
-        />
-        <BentoCard
-          eyebrow="Analysis"
-          title="Undercut your competitors"
-          description="With our advanced data mining, you’ll know which companies your leads are talking to and exactly how much they’re being charged."
-          graphic={
-            <div className="absolute inset-0 bg-[url(/screenshots/competitors.png)] bg-size-[1100px_650px] bg-position-[left_-38px_top_-73px] bg-no-repeat" />
-          }
-          fade={['bottom']}
-          className="lg:col-span-3 lg:rounded-tr-4xl"
-        />
-        <BentoCard
-          eyebrow="Speed"
-          title="Built for power users"
-          description="It’s never been faster to cold email your entire contact list using our streamlined keyboard shortcuts."
-          graphic={
-            <div className="flex size-full pt-10 pl-10">
-              <Keyboard highlighted={['LeftCommand', 'LeftShift', 'D']} />
-            </div>
-          }
-          className="lg:col-span-2 lg:rounded-bl-4xl"
-        />
-        <BentoCard
-          eyebrow="Source"
-          title="Get the furthest reach"
-          description="Bypass those inconvenient privacy laws to source leads from the most unexpected places."
-          graphic={<LogoCluster />}
-          className="lg:col-span-2"
-        />
-        <BentoCard
-          eyebrow="Limitless"
-          title="Sell globally"
-          description="Radiant helps you sell in locations currently under international embargo."
-          graphic={<Map />}
-          className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
-        />
-      </div>
-    </Container>
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
+          <BentoCard
+            eyebrow="Tailored CV"
+            title="A CV written for every role"
+            description="Easli rewrites your CV around the keywords and skills each employer asks for, without inventing anything you have not done."
+            graphic={<CvGraphic />}
+            className="max-lg:rounded-t-4xl lg:col-span-3 lg:rounded-tl-4xl"
+          />
+          <BentoCard
+            eyebrow="Best jobs"
+            title="Only roles worth your time"
+            description="Every role is scored against your experience and goals. You see the strongest matches first and skip the noise."
+            graphic={<MatchGraphic />}
+            className="lg:col-span-3 lg:rounded-tr-4xl"
+          />
+          <BentoCard
+            eyebrow="Cover letters"
+            title="Letters that sound like you"
+            description="A fresh, specific cover letter for each application, written in your own tone."
+            graphic={<LetterGraphic />}
+            className="lg:col-span-2 lg:rounded-bl-4xl"
+          />
+          <BentoCard
+            eyebrow="Sources"
+            title="Every job board in one place"
+            description="Easli searches the boards you already use and surfaces the roles that fit, all in one feed."
+            graphic={<LogoCluster />}
+            className="lg:col-span-2"
+          />
+          <BentoCard
+            eyebrow="Control"
+            title="You always have the final say"
+            description="Review each application before it goes out, or turn on auto-apply for the roles you trust Easli with."
+            graphic={<ReviewGraphic />}
+            className="max-lg:rounded-b-4xl lg:col-span-2 lg:rounded-br-4xl"
+          />
+        </div>
+      </Container>
+    </div>
   )
 }
 
@@ -134,50 +179,36 @@ function DarkBentoSection() {
   return (
     <div className="mx-2 mt-2 rounded-4xl bg-gray-900 py-32">
       <Container>
-        <Subheading dark>Outreach</Subheading>
+        <Subheading dark>After you apply</Subheading>
         <Heading as="h3" dark className="mt-2 max-w-3xl">
-          Customer outreach has never been easier.
+          Stay on top of every application.
         </Heading>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-16 lg:grid-cols-6 lg:grid-rows-2">
           <BentoCard
             dark
-            eyebrow="Networking"
-            title="Sell at the speed of light"
-            description="Our RadiantAI chat assistants analyze the sentiment of your conversations in real time, ensuring you're always one step ahead."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/networking.png)] bg-size-[851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
+            eyebrow="Tracking"
+            title="Your whole search, one board"
+            description="See every application, interview and offer in a single pipeline, updated automatically as replies come in."
+            graphic={<PipelineGraphic />}
             className="max-lg:rounded-t-4xl lg:col-span-4 lg:rounded-tl-4xl"
           />
           <BentoCard
             dark
-            eyebrow="Integrations"
-            title="Meet leads where they are"
-            description="With thousands of integrations, no one will be able to escape your cold outreach."
+            eyebrow="Inbox"
+            title="Replies land where you work"
+            description="Connect your email and calendar so recruiter replies and interview invites are never missed."
             graphic={<LogoTimeline />}
             // `overflow-visible!` is needed to work around a Chrome bug that disables the mask on the graphic.
             className="z-10 overflow-visible! lg:col-span-2 lg:rounded-tr-4xl"
           />
           <BentoCard
             dark
-            eyebrow="Meetings"
-            title="Smart call scheduling"
-            description="Automatically insert intro calls into your leads' calendars without their consent."
-            graphic={<LinkedAvatars />}
-            className="lg:col-span-2 lg:rounded-bl-4xl"
-          />
-          <BentoCard
-            dark
-            eyebrow="Engagement"
-            title="Become a thought leader"
-            description="RadiantAI automatically writes LinkedIn posts that relate current events to B2B sales, helping you build a reputation as a thought leader."
-            graphic={
-              <div className="h-80 bg-[url(/screenshots/engagement.png)] bg-size-[851px_344px] bg-no-repeat" />
-            }
-            fade={['top']}
-            className="max-lg:rounded-b-4xl lg:col-span-4 lg:rounded-br-4xl"
+            eyebrow="Speed"
+            title="Apply while you sleep"
+            description="Easli works through new roles around the clock, so you are always among the first applicants."
+            graphic={<StatsGraphic />}
+            className="max-lg:rounded-b-4xl lg:col-span-6 lg:rounded-b-4xl"
           />
         </div>
       </Container>
@@ -190,9 +221,7 @@ export default function Home() {
     <div className="overflow-hidden">
       <Hero />
       <main>
-        <Container className="mt-10">
-          <LogoCloud />
-        </Container>
+        <StatsStrip />
         <div className="bg-linear-to-b from-white from-50% to-gray-100 py-32">
           <FeatureSection />
           <BentoSection />

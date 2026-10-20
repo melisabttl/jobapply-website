@@ -21,43 +21,43 @@ const testimonials = [
   {
     img: '/testimonials/tina-yards.jpg',
     name: 'Tina Yards',
-    title: 'VP of Sales, Protocol',
+    title: 'Product Designer',
     quote:
-      'Thanks to Radiant, we’re finding new leads that we never would have found with legal methods.',
+      'Easli sent 40 tailored applications in my first week. I had three interviews before I would have finished one.',
   },
   {
     img: '/testimonials/conor-neville.jpg',
     name: 'Conor Neville',
-    title: 'Head of Customer Success, TaxPal',
+    title: 'Customer Success Manager',
     quote:
-      'Radiant made undercutting all of our competitors an absolute breeze.',
+      'I stopped rewriting my CV for every role. Easli does it better and in seconds.',
   },
   {
     img: '/testimonials/amy-chase.jpg',
     name: 'Amy Chase',
-    title: 'Head of GTM, Pocket',
+    title: 'Growth Marketer',
     quote:
-      'We closed a deal in literally a few minutes because we knew their exact budget.',
+      'The match scores pointed me at roles I would have scrolled past. I got an offer in two weeks.',
   },
   {
     img: '/testimonials/veronica-winton.jpg',
     name: 'Veronica Winton',
-    title: 'CSO, Planeteria',
+    title: 'Operations Lead',
     quote:
-      'We’ve managed to put two of our main competitors out of business in 6 months.',
+      'My cover letters finally sound like me, and recruiters actually reply now.',
   },
   {
     img: '/testimonials/dillon-lenora.jpg',
     name: 'Dillon Lenora',
-    title: 'VP of Sales, Detax',
-    quote: 'I was able to replace 80% of my team with RadiantAI bots.',
+    title: 'Software Engineer',
+    quote:
+      'Auto-apply let me keep my job search going while I was still working full time.',
   },
   {
     img: '/testimonials/harriet-arron.jpg',
     name: 'Harriet Arron',
-    title: 'Account Manager, Commit',
-    quote:
-      'I’ve smashed all my targets without having to speak to a lead in months.',
+    title: 'Data Analyst',
+    quote: 'I went from 5 applications a week to 50 without burning out.',
   },
 ]
 
@@ -154,8 +154,8 @@ function CallToAction() {
   return (
     <div>
       <p className="max-w-sm text-sm/6 text-gray-600">
-        Join the best sellers in the business and start using Radiant to hit
-        your targets today.
+        Join thousands of job seekers and start using Easli to land your targets
+        today.
       </p>
       <div className="mt-2">
         <Link
