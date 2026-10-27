@@ -197,7 +197,7 @@ function DarkBentoSection() {
             dark
             eyebrow="Inbox"
             title="Replies land where you work"
-            description="Connect your email and calendar so recruiter replies and interview invites are never missed."
+            description="Connect your email, calendar and video calls so recruiter replies and interview invites are never missed."
             graphic={<LogoTimeline />}
             // `overflow-visible!` is needed to work around a Chrome bug that disables the mask on the graphic.
             className="z-10 overflow-visible! lg:col-span-2 lg:rounded-tr-4xl"

@@ -54,26 +54,14 @@ export function LogoTimeline() {
       <div className="@container absolute inset-0 grid grid-cols-1 pt-8">
         <Row>
           <Logo
-            label="Loom"
-            src="/logo-timeline/loom.svg"
-            className="[animation-delay:-26s] [animation-duration:30s]"
-          />
-          <Logo
             label="Gmail"
             src="/logo-timeline/gmail.svg"
             className="[animation-delay:-8s] [animation-duration:30s]"
           />
-        </Row>
-        <Row>
           <Logo
-            label="Asana"
-            src="/logo-timeline/asana.svg"
-            className="[animation-delay:-40s] [animation-duration:40s]"
-          />
-          <Logo
-            label="Microsoft Teams"
-            src="/logo-timeline/microsoft-teams.svg"
-            className="[animation-delay:-20s] [animation-duration:40s]"
+            label="Zoom"
+            src="/logo-timeline/zoom.svg"
+            className="[animation-delay:-23s] [animation-duration:30s]"
           />
         </Row>
         <Row>
@@ -83,45 +71,16 @@ export function LogoTimeline() {
             className="[animation-delay:-10s] [animation-duration:40s]"
           />
           <Logo
+            label="Microsoft Teams"
+            src="/logo-timeline/microsoft-teams.svg"
+            className="[animation-delay:-30s] [animation-duration:40s]"
+          />
+        </Row>
+        <Row>
+          <Logo
             label="Google Drive"
             src="/logo-timeline/google-drive.svg"
-            className="[animation-delay:-32s] [animation-duration:40s]"
-          />
-        </Row>
-        <Row>
-          <Logo
-            label="Basecamp"
-            src="/logo-timeline/basecamp.svg"
-            className="[animation-delay:-45s] [animation-duration:45s]"
-          />
-          <Logo
-            label="Discord"
-            src="/logo-timeline/discord.svg"
-            className="[animation-delay:-23s] [animation-duration:45s]"
-          />
-        </Row>
-        <Row>
-          <Logo
-            label="Hubspot"
-            src="/logo-timeline/hubspot.svg"
-            className="[animation-delay:-55s] [animation-duration:60s]"
-          />
-          <Logo
-            label="Slack"
-            src="/logo-timeline/slack.svg"
-            className="[animation-delay:-20s] [animation-duration:60s]"
-          />
-        </Row>
-        <Row>
-          <Logo
-            label="Adobe Creative Cloud"
-            src="/logo-timeline/adobe-creative-cloud.svg"
-            className="[animation-delay:-9s] [animation-duration:40s]"
-          />
-          <Logo
-            label="Zoom"
-            src="/logo-timeline/zoom.svg"
-            className="[animation-delay:-28s] [animation-duration:40s]"
+            className="[animation-delay:-20s] [animation-duration:45s]"
           />
         </Row>
       </div>

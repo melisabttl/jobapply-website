@@ -63,6 +63,7 @@ function Sitemap() {
       <div>
         <SitemapHeading>Account</SitemapHeading>
         <SitemapLinks>
+          <SitemapLink href="/company">About</SitemapLink>
           <SitemapLink href="/login">Log in</SitemapLink>
           <SitemapLink href="#">Get started</SitemapLink>
         </SitemapLinks>
